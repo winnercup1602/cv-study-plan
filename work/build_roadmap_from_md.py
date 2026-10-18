@@ -115,11 +115,18 @@ def build(source_path=None, output_path=None):
                         badge = 'essential' if '필수' in priority else 'extended'
                         type_label = f'<span class="topic-type" aria-label="유형: {inline(topic_type)}">{inline(topic_type)}</span>' if topic_type else ''
                         description_points = re.split(r'<br\s*/?>', description)
+                        concepts_html = ''
+                        concepts_match = re.fullmatch(r'\*\*포함 개념:\*\*\s*(.+)', description_points[0].strip())
+                        if concepts_match:
+                            concepts = re.split(r'\s+·\s+', concepts_match[1])
+                            concepts_html = '<div class="topic-concepts"><h5>포함 개념</h5><ul>' + ''.join(f'<li>{inline(concept.strip())}</li>' for concept in concepts) + '</ul></div>'
+                            description_points = description_points[1:]
                         if len(description_points) > 1:
                             description_html = '<ul class="topic-points">' + ''.join(f'<li>{inline(point.strip())}</li>' for point in description_points) + '</ul>'
                         else:
-                            description_html = f'<p>{inline(description)}</p>'
-                        out.append(f'<article class="topic"><details class="topic-disclosure"><summary class="topic-summary"><h4 class="topic-title"><span class="topic-order" aria-label="학습 순서 {serial}">{serial:02d}</span><span class="topic-heading"><span class="topic-name">{inline(name)}</span>{type_label}</span><span class="badge {badge}">{inline(priority)}</span><span class="topic-chevron" aria-hidden="true"></span></h4></summary><div class="topic-description">{description_html}</div></details></article>')
+                            description_html = f'<p>{inline(description_points[0])}</p>' if description_points else ''
+                        order_html = f'<span class="topic-order" aria-label="학습 순서 {serial}">{serial:02d}</span>'
+                        out.append(f'<article class="topic"><details class="topic-disclosure"><summary class="topic-summary"><h4 class="topic-title">{order_html}<span class="topic-heading"><span class="topic-name">{inline(name)}</span>{type_label}</span><span class="badge {badge}">{inline(priority)}</span><span class="topic-chevron" aria-hidden="true"></span></h4></summary><div class="topic-description">{concepts_html}{description_html}</div></details></article>')
                     out.append('</div>')
                 else:
                     out.append('<div class="table-wrap"><table><thead><tr>' + ''.join(f'<th scope="col">{inline(c)}</th>' for c in table[0]) + '</tr></thead><tbody>')
@@ -129,6 +136,13 @@ def build(source_path=None, output_path=None):
                 continue
             heading = re.match(r'^(#{2,6}) (.+)$', line)
             if heading:
+                subsection = re.fullmatch(r'(\d+)-([A-Z])\. (.+)', heading[2]) if model else None
+                if subsection:
+                    chapter_number, letter, name = subsection.groups()
+                    serial = 0
+                    out.append(f'<h4 class="study-subsection" id="chapter-{chapter_number}-{letter.lower()}"><span>{chapter_number}-{letter}</span>{inline(name)}</h4>')
+                    i += 1
+                    continue
                 level = min(6, max(4, len(heading[1]))) if model else min(4, max(3, len(heading[1])))
                 heading_class = 'session-phase' if re.match(r'^(시작 점검|핵심 학습|세션 프레임워크|학습 정리) · ', heading[2]) else 'subheading'
                 out.append(f'<h{level} class="{heading_class}">{inline(heading[2])}</h{level}>')
@@ -240,12 +254,17 @@ def build(source_path=None, output_path=None):
         body = re.sub(r'^#### 학습 내용\s*\n', '', body, flags=re.M)
         content = render(body, model=True)
         section = f'<section class="chapter" id="chapter-{number}" aria-labelledby="heading-{number}"><header class="chapter-heading"><span class="chapter-number">{number:02d}</span><div><h3 id="heading-{number}">{inline(name)}</h3></div></header><div class="chapter-body">{goal_html}<div class="content-label">학습 내용 <span>위에서 아래로 권장 학습 순서</span></div>{content}</div></section>'
-        entry = {'number': number, 'name': name, 'html': section}
+        subsections = [{'id': f'chapter-{n}-{letter.lower()}', 'label': f'{n}-{letter}', 'name': label} for n, letter, label in re.findall(r'^#### (\d+)-([A-Z])\. (.+)$', body, re.M)]
+        entry = {'number': number, 'name': name, 'html': section, 'subsections': subsections}
         chapters.append(entry)
 
     chapter_range = f'{chapters[0]["number"]}–{chapters[-1]["number"]}장' if chapters else ''
     nav = '<div class="nav-group"><div class="nav-label">학습 과정 · ' + chapter_range + '</div>'
-    nav += ''.join(f'<a class="nav-link" href="#chapter-{ch["number"]}"><span>{ch["number"]:02d}</span>{inline(ch["name"])}</a>' for ch in chapters) + '</div>'
+    for ch in chapters:
+        nav += f'<a class="nav-link" href="#chapter-{ch["number"]}"><span>{ch["number"]:02d}</span>{inline(ch["name"])}</a>'
+        if ch['subsections']:
+            nav += '<div class="nav-subsections">' + ''.join(f'<a class="nav-link nav-sub-link" href="#{sub["id"]}"><span>{sub["label"]}</span>{inline(sub["name"])}</a>' for sub in ch['subsections']) + '</div>'
+    nav += '</div>'
     part_html = ''.join(ch['html'] for ch in chapters)
     references, ref_nav, study_intro_references = '', '', ''
     special_ids = {'개념 유형 구분': 'taxonomy'}

@@ -93,6 +93,21 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 .brand-title{min-width:0;line-height:1.55;word-break:keep-all}
 .brand-icon{flex-shrink:0}
 
+/* Chapter parts and concept lists inside topic disclosures. */
+.study-subsection{display:flex;align-items:center;gap:12px;margin:30px 0 13px;padding:15px 17px;background:var(--blue-soft);border:1px solid #dce3ff;border-radius:9px;font-size:16px;line-height:1.7;color:var(--ink);scroll-margin-top:25px}
+.study-subsection>span{flex-shrink:0;color:var(--blue);font-size:12px;font-weight:750;letter-spacing:.3px}
+.study-subsection+p{margin-top:12px}
+.topic-concepts{max-width:870px;margin:3px 0 15px;padding:14px 16px;background:#f5f7fc;border:1px solid #e6eaf4;border-radius:8px}
+.topic-concepts h5{margin:0 0 10px;font-size:11px;line-height:1.6;font-weight:750;color:var(--blue)}
+.topic-concepts ul{display:flex;flex-wrap:wrap;gap:6px 8px;list-style:none;margin:0;padding:0}
+.topic-concepts li{margin:0;padding:4px 8px;font-size:12px;line-height:1.5;color:#425169;background:white;border:1px solid #e1e6f0;border-radius:5px;overflow-wrap:anywhere}
+.topic-concepts+.topic-points{margin-top:0}
+.nav-subsections{margin:0 0 10px 15px;padding-left:9px;border-left:1px solid var(--line)}
+.study-nav .nav-sub-link{gap:8px;padding:7px 8px;font-size:11px;font-weight:500;color:var(--muted)}
+.study-nav .nav-sub-link span{min-width:25px;font-size:9px;color:#7787a2}
+@media(max-width:760px){.study-subsection{align-items:flex-start;gap:10px;padding:13px;font-size:14px}.study-subsection>span{font-size:11px;padding-top:2px}.topic-concepts{padding:12px;margin-bottom:13px}.topic-concepts ul{gap:6px}.topic-concepts li{font-size:11px;padding:4px 7px}.nav-subsections{display:contents}.study-nav .nav-sub-link{padding:7px 10px;font-size:10px}.study-nav .nav-sub-link span{min-width:0}}
+@media print{.study-subsection{background:#f7f7f7;border-color:#ccc;break-after:avoid;color:#222;font-size:12pt}.study-subsection>span{color:#333}.topic-concepts{background:white;border-color:#ddd;break-inside:avoid}.topic-concepts h5{color:#333;font-size:8pt}.topic-concepts li{font-size:8pt;background:white;border-color:#ddd}}
+
 /* One session framework for preparation and delivery; guidance starts folded. */
 .operations-body .session-framework .session-step{display:block;padding:0;margin:0}
 .session-disclosure{min-width:0}
