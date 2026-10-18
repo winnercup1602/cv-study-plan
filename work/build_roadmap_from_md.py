@@ -72,8 +72,25 @@ def build(source_path=None, output_path=None):
                     continue
                 data = table[2:]
                 is_schedule = table[0] == ['소요 시간', '진행 구간', '단계', '진행 내용']
+                is_framework = table[0] == ['소요 시간', '진행 구간', '단계', '중심 질문', '세부 안내']
                 is_topics = model and ((len(table[0]) == 4 and table[0][1:3] == ['유형', '등급']) or (len(table[0]) == 3 and table[0][1] == '등급'))
-                if is_schedule:
+                if is_framework:
+                    out.append('<ol class="session-timeline session-framework">')
+                    for row in data:
+                        if len(row) != 5:
+                            raise ValueError('세션 프레임워크 표는 소요 시간·진행 구간·단계·중심 질문·세부 안내의 다섯 열로 구성해야 합니다.')
+                        duration, interval, stage, question, guidance = row
+                        named_stage = re.fullmatch(r'([1-6])\. (.+?) · (.+)', stage)
+                        if named_stage:
+                            number, key, name = named_stage.groups()
+                            stage_html = f'<span class="session-stage-number">{int(number):02d}</span><span class="session-stage-key">{inline(key)}</span><span class="session-stage-name">{inline(name)}</span>'
+                        else:
+                            stage_html = inline(stage)
+                        points = re.split(r'<br\s*/?>', guidance)
+                        guidance_html = '<ul>' + ''.join(f'<li>{inline(point.strip())}</li>' for point in points) + '</ul>'
+                        out.append(f'<li class="session-step"><details class="session-disclosure"><summary class="session-summary"><div class="session-timing">{inline(duration)}<span>{inline(interval)}</span></div><div class="session-content"><h5>{stage_html}</h5><p>{inline(question)}</p></div><span class="session-chevron" aria-hidden="true"></span></summary><div class="session-guidance">{guidance_html}</div></details></li>')
+                    out.append('</ol>')
+                elif is_schedule:
                     out.append('<ol class="session-timeline">')
                     for row in data:
                         if len(row) != 4:
@@ -113,7 +130,7 @@ def build(source_path=None, output_path=None):
             heading = re.match(r'^(#{2,6}) (.+)$', line)
             if heading:
                 level = min(6, max(4, len(heading[1]))) if model else min(4, max(3, len(heading[1])))
-                heading_class = 'session-phase' if re.match(r'^(시작 점검|핵심 학습|학습 정리) · ', heading[2]) else 'subheading'
+                heading_class = 'session-phase' if re.match(r'^(시작 점검|핵심 학습|세션 프레임워크|학습 정리) · ', heading[2]) else 'subheading'
                 out.append(f'<h{level} class="{heading_class}">{inline(heading[2])}</h{level}>')
                 i += 1
                 continue

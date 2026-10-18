@@ -92,3 +92,25 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 /* Keep the shared document title readable in the sidebar. */
 .brand-title{min-width:0;line-height:1.55;word-break:keep-all}
 .brand-icon{flex-shrink:0}
+
+/* One session framework for preparation and delivery; guidance starts folded. */
+.operations-body .session-framework .session-step{display:block;padding:0;margin:0}
+.session-disclosure{min-width:0}
+.session-summary{display:grid;grid-template-columns:80px minmax(0,1fr) 12px;align-items:center;gap:20px;padding:19px 5px;list-style:none;cursor:pointer}
+.session-summary::-webkit-details-marker{display:none}
+.session-summary:hover .session-stage-key{color:#263fa7}
+.session-summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+.session-summary .session-content h5{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-bottom:5px;line-height:1.7}
+.session-stage-number{font-size:10px;font-weight:650;color:#8a96a8;font-variant-numeric:tabular-nums}
+.session-stage-key{font-size:15px;font-weight:750;color:var(--blue)}
+.session-stage-name{font-size:13px;font-weight:650;color:var(--ink)}
+.session-summary .session-content{min-width:0}
+.session-chevron{width:8px;height:8px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg);margin-bottom:4px}
+.session-disclosure[open]>.session-summary .session-chevron{transform:rotate(225deg);margin-top:5px;margin-bottom:0}
+.session-guidance{margin:0 24px 18px 105px;padding:13px 17px;border-radius:8px;background:#f5f7fc}
+.operations-body .session-guidance ul{padding-left:18px;margin:0;list-style:disc}
+.operations-body .session-guidance li{font-size:12px;line-height:1.9;margin:7px 0;padding-left:2px}
+.operations-body .session-guidance li:first-child{margin-top:0}
+.operations-body .session-guidance li:last-child{margin-bottom:0}
+@media(max-width:760px){.session-summary{grid-template-columns:56px minmax(0,1fr) 8px;gap:12px;padding:17px 0}.session-summary .session-content h5{gap:3px 7px;font-size:13px}.session-stage-key{font-size:14px}.session-stage-name{font-size:12px}.session-guidance{margin:0 0 17px;padding:12px 13px}.operations-body .session-guidance li{font-size:12px}}
+@media print{.session-summary{padding:12px 0 7px;cursor:default}.session-chevron{display:none}.session-guidance{margin:0 0 12px 100px;padding:8px 12px;background:#f7f7f7}.session-stage-key{color:#222;font-size:11pt}.session-stage-name{font-size:10pt}.operations-body .session-guidance li{font-size:9pt}.session-disclosure{break-inside:avoid}}
