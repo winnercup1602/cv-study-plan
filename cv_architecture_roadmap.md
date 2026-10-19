@@ -28,29 +28,29 @@
 |---|---|---|---|---|
 | **5분** | 0–5분 | 이전 내용 복습 + 학습 포인트 제시 | 지난 내용과 이번 학습 목표는 무엇인가? | **이전 복습:** 지난 공유 기록의 학습 포인트·수정한 설명·남은 질문. 첫 세션은 선수 개념 점검<br>**이번 제시:** 주제·목표 Level·학습 포인트<br>**사전 준비:** 시작·종료에 같은 문장·항목·순서의 작성지, 설명·수식·도식 작성 공간, 인원수에 맞춰 출력 |
 
-#### 세션 프레임워크 · **40분** (5–45분)
+#### 세션 프레임워크 · **45분** (5–50분)
 
 | 소요 시간 | 진행 구간 | 단계 | 중심 질문 | 세부 안내 |
 |---|---|---|---|---|
 | **5분** | 5–10분 | 1. Why · 필요성 | 왜 이 개념이 필요한가? | **문제 상황:** 해결할 문제·기존 접근의 어려움·구체적인 예<br>**필요성:** 이 개념으로 달라지는 점·기대하는 효과 |
 | **5분** | 10–15분 | 2. What · 아이디어와 원리 | 문제를 해결하는 아이디어는 무엇인가? | **중심 아이디어:** 한 문장 설명·직관적인 그림<br>**개념과 가정:** 주요 용어·성립 조건<br>**주요 수식:** 기호·각 항의 의미와 아이디어의 연결 |
-| **15분** | 15–30분 | 3. How · 구조와 동작 | 실제로 어떻게 작동하는가? | **동작 흐름:** 입력 → 계산·변환 → 출력, 구성요소의 역할·연결<br>**학습과 추론:** 동작 차이·target·loss·gradient·고정/갱신 파라미터(해당 시)<br>**수식·코드:** 차원·연산 위치, 작은 입력 예제의 계산 추적<br>**구조 비교:** 구성요소 제거·변경 시의 차이 |
-| **5분** | 30–35분 | 4. Evidence · 근거와 비교 | 효과와 설계 이유를 무엇으로 확인하는가? | **대표 근거:** 실험·적용 사례·간단한 계산<br>**비교 흐름:** 질문 → 비교 대상·변경 요소·고정 조건 → 결과 → 해석<br>**설계 이유:** ablation·평가 지표·계산 비용(해당 시)<br>**근거 구분:** 자료에서 확인한 사실 / 직접 확인한 결과 / 자신의 해석 |
-| **5분** | 35–40분 | 5. Related Work · 관련 연구와 발전 흐름 | 다른 연구에서는 어떻게 이어지고 달라졌는가? | **자료 선정:** 주제 이해에 도움이 되는 대표 자료·후속 연구 2–3개<br>**발전 흐름:** 유지·변형·대체된 원리와 구조<br>**핵심 차이:** 최근 활용 방식·접근별 차이·참고 자료 |
-| **5분** | 40–45분 | 6. Limitations & Applications · 한계와 연구 활용 | 어디까지 유효하며, 우리 연구에는 어떻게 활용할 수 있는가? | **조건과 한계:** 유용한 상황·가정·실패 조건<br>**적용 제약:** 데이터·학습 조건·계산 비용<br>**연구 연결:** 활용 지점·추가 확인 질문·후속 실험<br>**근거 구분:** 확인된 결과 / 검증 전 활용 아이디어 |
+| **20분** | 15–35분 | 3. How · 구조와 동작 | 실제로 어떻게 작동하는가? | **동작 흐름:** 입력 → 계산·변환 → 출력, 구성요소의 역할·연결<br>**학습과 추론:** 동작 차이·target·loss·gradient·고정/갱신 파라미터(해당 시)<br>**수식·코드:** 차원·연산 위치, 작은 입력 예제의 계산 추적<br>**구조 비교:** 구성요소 제거·변경 시의 차이 |
+| **5분** | 35–40분 | 4. Evidence · 근거와 비교 | 효과와 설계 이유를 무엇으로 확인하는가? | **대표 근거:** 실험·적용 사례·간단한 계산<br>**비교 흐름:** 질문 → 비교 대상·변경 요소·고정 조건 → 결과 → 해석<br>**설계 이유:** ablation·평가 지표·계산 비용(해당 시)<br>**근거 구분:** 자료에서 확인한 사실 / 직접 확인한 결과 / 자신의 해석 |
+| **5분** | 40–45분 | 5. Related Work · 관련 연구와 발전 흐름 | 다른 연구에서는 어떻게 이어지고 달라졌는가? | **자료 선정:** 주제 이해에 도움이 되는 대표 자료·후속 연구 2–3개<br>**발전 흐름:** 유지·변형·대체된 원리와 구조<br>**핵심 차이:** 최근 활용 방식·접근별 차이·참고 자료 |
+| **5분** | 45–50분 | 6. Limitations & Applications · 한계와 연구 활용 | 어디까지 유효하며, 우리 연구에는 어떻게 활용할 수 있는가? | **조건과 한계:** 유용한 상황·가정·실패 조건<br>**적용 제약:** 데이터·학습 조건·계산 비용<br>**연구 연결:** 활용 지점·추가 확인 질문·후속 실험<br>**근거 구분:** 확인된 결과 / 검증 전 활용 아이디어 |
 
-#### 학습 정리 · **15분** (45–60분)
+#### 학습 정리 · **10분** (50–60분)
 
 | 소요 시간 | 진행 구간 | 단계 | 중심 질문 | 세부 안내 |
 |---|---|---|---|---|
-| **15분** | 45–60분 | 학습 포인트 확인·공유 기록 | 학습 포인트를 자신의 언어로 설명할 수 있는가? | **각자 작성 · 5분:** 자료·다른 사람의 답을 덮고 모든 항목에 설명·수식·도식 작성, 막힌 부분·남은 질문 표시<br>**함께 확인·기록 · 10분:** 답 비교·설명 수정, 학습 포인트별 정리·근거·남은 질문 기록. 다음 복습의 기준<br>**세션 후 보완:** 공유 기록의 문장·그림·수식·근거 정리 |
+| **10분** | 50–60분 | 학습 포인트 확인·공유 기록 | 학습 포인트를 자신의 언어로 설명할 수 있는가? | **각자 작성 · 5분:** 자료·다른 사람의 답을 덮고 모든 항목에 설명·수식·도식 작성, 막힌 부분·남은 질문 표시<br>**함께 확인·기록 · 5분:** 답의 주요 차이·오해 확인, 학습 포인트별 수정한 설명·남은 질문·근거 위치 기록. 다음 복습의 기준<br>**세션 후 보완:** 공유 기록의 문장·그림·수식·근거 정리 |
 
 ### 3. 학습 포인트 확인
 
 **시작에 안내한 학습 포인트를 같은 문장·항목·순서로 다시 확인합니다.**
 
 1. **각자 작성 · 5분.** 자료나 다른 사람의 답을 보지 않고, 인쇄된 작성지의 모든 항목에 설명·수식·도식으로 답합니다. 막힌 부분도 표시합니다.
-2. **함께 확인·기록 · 10분.** 답을 비교해 헷갈린 내용을 바로잡고, 수정한 설명·남은 질문·근거를 공유 기록에 남깁니다. 이 기록을 다음 복습의 기준으로 사용합니다.
+2. **함께 확인·기록 · 5분.** 답의 주요 차이와 오해를 확인하고, 수정한 설명·남은 질문·근거 위치를 공유 기록의 초안으로 남깁니다. 세션 후 보완해 다음 복습의 기준으로 사용합니다.
 
 작성지에는 항목별로 **내 설명·수식·도식 / 막힌 부분·남은 질문** 공간을 둡니다.
 
@@ -149,19 +149,19 @@
 
 #### 학습 목표
 
-Convolution·pooling의 연산에서 출발해 CNN 블록과 다중 해상도 feature 구성을 이해하고, 이를 검출·분할의 출력과 학습 구조로 연결한다.
+Convolution·pooling에서 출발해 residual learning, encoder–decoder와 다중 해상도 feature 구성을 이해하고, 이를 객체 검출·분할의 출력과 학습 구조로 연결한다.
 
 #### 학습 내용
 
-| 모델 / 구조 | 유형 | 등급 | 깊게 봐야 할 포인트 |
+아래 다섯 항목은 개념에 따른 학습 묶음입니다. 각 항목의 분량과 이해의 깊이에 따라 회차를 나눌 수 있습니다.
+
+| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Convolution / Pooling | 기초 연산 | 필수 | **공간 연산:** locality·weight sharing을 이해하고, kernel·stride·padding·dilation에 따른 출력 shape와 receptive field를 계산한다.<br>**연산 비용:** 일반·1×1·group·depthwise convolution의 채널 연결, 파라미터 수와 연산량을 비교한다.<br>**Pooling:** max·average·global average pooling이 공간 해상도와 정보에 미치는 영향을 확인한다. |
-| ResNet | 모델 · Backbone | 필수 | **Residual learning:** plain network의 degradation 문제와, residual branch에 shortcut을 더하는 구조를 연결한다.<br>**블록과 stage:** basic block·bottleneck, stage별 해상도·채널 변화, identity·projection shortcut의 조건과 gradient 흐름을 추적한다.<br>**설계 비교:** shortcut ablation을 해석하고, pre-activation은 원 ResNet과 구분되는 후속 변형으로 비교한다. |
-| U-Net | 모델 | 필수 | **Encoder–decoder:** 해상도를 줄이며 문맥을 얻는 경로와, 해상도를 높여 픽셀별 출력을 만드는 경로를 추적한다.<br>**Skip connection:** encoder feature를 decoder에 concatenation하는 이유와 채널·공간 크기 변화를 확인한다.<br>**해상도 정렬:** 원 논문의 up-convolution·crop을 확인하고, interpolation 등 후속 구현의 선택과 구분한다. |
-| FPN | 구성 요소 · Neck | 필수 | **다중 해상도:** backbone의 여러 stage에서 나온 feature를 활용해 크기가 다른 대상을 다루는 이유를 이해한다.<br>**Feature fusion:** top-down upsampling과 lateral 1×1 convolution, addition 전 해상도·채널 정렬을 추적한다.<br>**Neck의 역할:** 각 pyramid level의 출력을 확인하고, U-Net의 concatenation과 FPN의 addition을 비교한다. |
-| Faster R-CNN | 모델 | 필수 | **Two-stage 검출:** 공유 backbone → RPN의 proposal 생성 → RoIPool → 분류·box 보정의 흐름을 추적한다.<br>**학습 신호:** anchor·proposal의 정답 할당, objectness·class target, box regression target과 loss를 구분한다.<br>**학습과 추론:** proposal 선택·NMS와 두 단계의 역할을 확인하고, 원 논문의 학습 절차와 후속 구현을 구분한다. |
-| Mask R-CNN | 모델 | 중요 | **Instance segmentation:** Faster R-CNN의 분류·box 예측에 병렬 mask branch를 더하는 구조를 이해한다.<br>**공간 정렬:** RoIPool의 좌표 양자화 문제와 RoIAlign의 bilinear sampling을 비교한다.<br>**Mask 학습:** RoI별 mask target·픽셀별 binary loss·추론 시 class 선택을 연결하고, 원 논문의 ablation으로 설계를 검토한다. |
-| YOLO | 모델 | 중요 | **One-stage 검출:** 대표 버전 한 편을 정해 backbone·neck·head와 box·class 출력, 정답 할당과 loss를 추적한다.<br>**추론과 비용:** 선택한 버전의 후처리를 확인하고, Faster R-CNN과 예측 구조·속도·정확도를 비교한다.<br>**버전 구분:** anchor 사용 여부와 NMS 필요 여부는 버전별로 확인한다. 다른 버전의 전체 구조는 별도 심화로 다룬다. |
+| Convolution / Pooling | 기초 연산 | 필수 | **포함 개념:** Locality / Weight sharing · Kernel / Stride / Padding / Dilation · Output shape · Receptive field · 1×1 / Group / Depthwise convolution · Parameter count / Computation cost · Max / Average / Global average pooling<br>**필요성:** 이미지의 공간 구조를 활용하는 지역 연결·가중치 공유, 완전 연결 연산과의 차이<br>**공간 연산:** kernel·stride·padding·dilation에 따른 출력 shape·receptive field 계산<br>**연산 비용:** 일반·1×1·group·depthwise convolution의 채널 연결, 파라미터 수·연산량 비교<br>**Pooling:** max·average·global average pooling의 출력, 해상도·정보 손실과 분류 head의 연결 |
+| ResNet / Residual Learning | 모델 · Backbone | 필수 | **포함 개념:** Degradation · Residual learning · Identity / Projection shortcut · Basic block / Bottleneck · Stage · Gradient flow · Pre-activation<br>**필요성:** 깊어진 plain network에서 학습 오차까지 커지는 degradation 문제, residual learning의 접근<br>**잔차와 shortcut:** F(x) + x의 의미, residual branch가 학습하는 함수와 identity 경로의 역할<br>**블록과 stage:** basic block·bottleneck, 해상도·채널 변화, identity·projection shortcut의 조건과 gradient 흐름<br>**설계 근거:** shortcut ablation, 원 ResNet과 후속 pre-activation 변형의 차이 |
+| Encoder–Decoder / Multi-scale Features | 모델 · 구성 요소 | 필수 | **포함 개념:** Semantic / Instance / Panoptic segmentation · U-Net · Encoder–Decoder · Skip connection / Concatenation · Up-convolution / Crop · FPN · Top-down pathway / Lateral connection · Feature pyramid / Addition<br>**과제 구분:** semantic은 픽셀별 범주, instance는 개별 객체의 mask, panoptic은 모든 픽셀의 범주와 셀 수 있는 객체의 개체 구분을 함께 예측<br>**U-Net · 분할 모델:** 문맥을 얻는 encoder와 위치 정보를 복원하는 decoder, encoder feature의 concatenation과 shape 변화<br>**U-Net 해상도 정렬:** 원 논문의 up-convolution·crop, interpolation 등 후속 구현과의 차이<br>**FPN · Neck:** backbone의 여러 stage → top-down upsampling·lateral 1×1 convolution·addition → 다중 해상도 feature, 결합 전 해상도·채널 정렬<br>**함께 비교:** U-Net의 픽셀별 출력과 FPN의 feature 출력, concatenation·addition의 차이, ResNet shortcut과 각 연결의 목적 비교 |
+| Object Detection | 모델 | 필수 | **포함 개념:** Bounding box / Class prediction · Faster R-CNN · RPN / Anchor / Proposal · RoIPool · Objectness · Box regression · YOLO · One-stage / Two-stage · Target assignment / Loss · NMS / Post-processing<br>**문제와 출력:** 여러 객체의 위치·종류 예측, box 좌표 표현과 분류·위치 오차의 학습 신호<br>**Faster R-CNN · 필수:** 공유 backbone → RPN의 proposal 생성 → RoIPool → 분류·box 보정, anchor·proposal의 정답 할당과 각 loss<br>**YOLO · 중요:** 대표 버전 한 편의 backbone·neck·head, 밀집된 위치에서의 box·class 출력, 정답 할당·loss<br>**학습과 추론:** proposal 선택·후처리의 역할, 원 Faster R-CNN의 학습 절차와 후속 구현의 차이, YOLO의 anchor 사용·NMS 필요 여부는 선택한 버전 기준으로 확인<br>**함께 비교:** proposal을 거치는 처리와 one-stage 예측의 차이, 평가 조건을 맞춘 속도·정확도·계산 비용 비교 |
+| Instance Segmentation | 모델 | 중요 | **포함 개념:** Mask R-CNN · Instance mask · RoIPool / RoIAlign · Coordinate quantization · Bilinear sampling · Mask branch / Target · Pixel-wise binary loss · Multi-task learning<br>**필요성:** 객체별 bounding box만으로 표현하기 어려운 경계·형상, semantic segmentation과의 출력 차이<br>**Mask R-CNN 구조:** Faster R-CNN의 분류·box 예측과 병렬로 추가한 mask branch, 검출에서 분할로의 확장<br>**공간 정렬:** RoIPool의 좌표 양자화 문제, RoIAlign의 bilinear sampling과 위치 정보 보존<br>**Mask 학습·추론:** RoI별 mask target·픽셀별 binary loss, 분류·box loss와의 결합, 추론 시 예측 class에 해당하는 mask 선택<br>**설계 근거:** 원 논문의 RoIAlign·mask branch 관련 ablation과 효과가 확인된 조건 |
 
 ### 2. Transformer 구조와 활용 모델
 
