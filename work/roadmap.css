@@ -109,6 +109,15 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 @media print{.study-subsection{background:#f7f7f7;border-color:#ccc;break-after:avoid;color:#222;font-size:12pt}.study-subsection>span{color:#333}.topic-concepts{background:white;border-color:#ddd;break-inside:avoid}.topic-concepts .topic-concepts-title{color:#333;font-size:8pt}.topic-concepts li{font-size:8pt;background:white;border-color:#ddd}}
 
 /* One session framework for preparation and delivery; guidance starts folded. */
+.study-day{margin:22px 0 0;padding:14px 16px;border-left:3px solid var(--blue);border-radius:0 7px 7px 0;background:#f5f7fc;break-after:avoid}
+.study-day-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;font-size:11px;font-weight:650;color:var(--blue)}
+.study-day-meta>span{padding:2px 7px;background:white;border:1px solid #dce3ff;border-radius:4px}
+.study-day time{font-variant-numeric:tabular-nums}
+.study-day h5{margin:7px 0 0;font-size:14px;line-height:1.65;font-weight:700;color:var(--ink)}
+#chapter-0 .subheading{color:var(--ink)}
+@media(max-width:760px){.study-day{padding:12px 13px}.study-day h5{font-size:13px}.study-day-meta{font-size:10px}#chapter-0 .table-wrap table{min-width:530px}}
+@media print{.study-day{background:#f7f7f7;border-color:#777}.study-day-meta{color:#333}.study-day h5{font-size:10pt}}
+
 .operations-body .session-framework .session-step{display:block;padding:0;margin:0}
 .session-disclosure{min-width:0}
 .session-summary{display:grid;grid-template-columns:80px minmax(0,1fr) 12px;align-items:center;gap:20px;padding:19px 5px;list-style:none;cursor:pointer}
