@@ -31,6 +31,7 @@ def build(source_path=None, output_path=None):
         out = []
         i = 0
         serial = 0
+        topic_heading_level = 4
         while i < len(lines):
             line = lines[i].strip()
             if not line or line == '---' or line.startswith(('# Part ', '### 공통 학습.', '### 선택 학습.')):
@@ -100,6 +101,8 @@ def build(source_path=None, output_path=None):
                     out.append('</ol>')
                 elif is_topics:
                     out.append('<div class="topic-list">')
+                    topic_heading_tag = f'h{topic_heading_level}'
+                    concepts_heading_tag = f'h{topic_heading_level + 1}'
                     for row in data:
                         if len(row) == 4:
                             name, topic_type, priority, description = row
@@ -119,14 +122,14 @@ def build(source_path=None, output_path=None):
                         concepts_match = re.fullmatch(r'\*\*포함 개념:\*\*\s*(.+)', description_points[0].strip())
                         if concepts_match:
                             concepts = re.split(r'\s+·\s+', concepts_match[1])
-                            concepts_html = '<div class="topic-concepts"><h5>포함 개념</h5><ul>' + ''.join(f'<li>{inline(concept.strip())}</li>' for concept in concepts) + '</ul></div>'
+                            concepts_html = f'<div class="topic-concepts"><{concepts_heading_tag} class="topic-concepts-title">포함 개념</{concepts_heading_tag}><ul>' + ''.join(f'<li>{inline(concept.strip())}</li>' for concept in concepts) + '</ul></div>'
                             description_points = description_points[1:]
                         if len(description_points) > 1:
                             description_html = '<ul class="topic-points">' + ''.join(f'<li>{inline(point.strip())}</li>' for point in description_points) + '</ul>'
                         else:
                             description_html = f'<p>{inline(description_points[0])}</p>' if description_points else ''
                         order_html = f'<span class="topic-order" aria-label="학습 순서 {serial}">{serial:02d}</span>'
-                        out.append(f'<article class="topic"><details class="topic-disclosure"><summary class="topic-summary"><h4 class="topic-title">{order_html}<span class="topic-heading"><span class="topic-name">{inline(name)}</span>{type_label}</span><span class="badge {badge}">{inline(priority)}</span><span class="topic-chevron" aria-hidden="true"></span></h4></summary><div class="topic-description">{concepts_html}{description_html}</div></details></article>')
+                        out.append(f'<article class="topic"><details class="topic-disclosure"><summary class="topic-summary"><{topic_heading_tag} class="topic-title">{order_html}<span class="topic-heading"><span class="topic-name">{inline(name)}</span>{type_label}</span><span class="badge {badge}">{inline(priority)}</span><span class="topic-chevron" aria-hidden="true"></span></{topic_heading_tag}></summary><div class="topic-description">{concepts_html}{description_html}</div></details></article>')
                     out.append('</div>')
                 else:
                     out.append('<div class="table-wrap"><table><thead><tr>' + ''.join(f'<th scope="col">{inline(c)}</th>' for c in table[0]) + '</tr></thead><tbody>')
@@ -140,6 +143,7 @@ def build(source_path=None, output_path=None):
                 if subsection:
                     chapter_number, letter, name = subsection.groups()
                     serial = 0
+                    topic_heading_level = 5
                     out.append(f'<h4 class="study-subsection" id="chapter-{chapter_number}-{letter.lower()}"><span>{chapter_number}-{letter}</span>{inline(name)}</h4>')
                     i += 1
                     continue

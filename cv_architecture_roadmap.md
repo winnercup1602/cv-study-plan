@@ -4,19 +4,7 @@
 
 **주 1회, 회당 60분(방학 중에는 주 2회)** 동안 CV의 핵심 개념과 모델을 함께 공부합니다. **개념이 필요한 이유, 구조와 수식의 의미, 실제 동작 원리를 깊이 이해하는 것**을 목표로 합니다. 배운 내용을 자신의 언어와 구조도·수식·코드로 설명하고, 연구에서 설계와 활용을 판단하는 데 연결합니다.
 
-매 세션은 **이전 내용 복습·학습 포인트 제시 → Why → What → How → Evidence → 관련 연구와 발전 흐름 → 한계와 연구 활용 → 학습 포인트 확인·공유 기록** 순서로 진행합니다. 현장에서 공유 기록의 초안을 남기고, 세션 후 근거와 표현을 보완해 한 페이지로 완성합니다.
-
-### 1. 학습 Level
-
-| Level | 도달 기준 | 적용 기준 |
-|---|---|---|
-| **L1 · 직관** | 개념이 필요한 이유와 해결하는 문제를 이해하고, 핵심 아이디어를 자신의 언어와 쉬운 예·figure로 설명할 수 있습니다. | 모든 구성원의 공통 목표 |
-| **L2 · 동작 원리** | 입력부터 출력까지의 계산 흐름, 구성요소·중요 수식의 역할과 가정, 학습·추론의 차이와 설계 이유를 설명할 수 있습니다. | 모든 구성원의 기본 도달 기준 |
-| **L3 · 연구와 구현** | 수식·구현 수준에서 동작을 추적하고, 설계의 근거·한계·대안과 조건이 바뀔 때의 영향을 분석할 수 있습니다. | 담당자의 준비 기준. 구성원은 자신의 연구와 연결되는 부분부터 심화 |
-
-**필수 / 중요는 학습 우선순위**, **L1 / L2 / L3는 이해의 깊이**를 나타냅니다. 구성원은 L1–L2를 공통 목표로 삼고, 담당자는 동작 원리를 수식·구현과 연결하며 설계 근거·한계·대안까지 준비합니다.
-
-### 2. 세션 준비와 진행
+### 1. 세션 준비와 진행
 
 담당자는 아래 여섯 단계에 따라 내용을 준비하고, 세션도 같은 순서로 진행합니다. 목표는 개념이 필요한 이유와 작동 원리를 이해하고, 그 효과와 한계, 연구에서의 활용까지 연결하는 것입니다.
 
@@ -26,7 +14,7 @@
 
 | 소요 시간 | 진행 구간 | 단계 | 중심 질문 | 세부 안내 |
 |---|---|---|---|---|
-| **5분** | 0–5분 | 이전 내용 복습 + 학습 포인트 제시 | 지난 내용과 이번 학습 목표는 무엇인가? | **이전 복습:** 지난 공유 기록의 학습 포인트·수정한 설명·남은 질문. 첫 세션은 선수 개념 점검<br>**이번 제시:** 주제·목표 Level·학습 포인트<br>**사전 준비:** 시작·종료에 같은 문장·항목·순서의 작성지, 설명·수식·도식 작성 공간, 인원수에 맞춰 출력 |
+| **5분** | 0–5분 | 이전 내용 복습 + 학습 포인트 제시 | 지난 내용과 이번 학습 목표는 무엇인가? | **이전 복습:** 지난 공유 기록의 학습 포인트·수정한 설명·남은 질문. 첫 세션은 선수 개념 점검<br>**이번 제시:** 주제·학습 포인트<br>**사전 준비:** 시작·종료에 같은 문장·항목·순서의 작성지, 설명·수식·도식 작성 공간, 인원수에 맞춰 출력 |
 
 #### 세션 프레임워크 · **45분** (5–50분)
 
@@ -45,7 +33,7 @@
 |---|---|---|---|---|
 | **10분** | 50–60분 | 학습 포인트 확인·공유 기록 | 학습 포인트를 자신의 언어로 설명할 수 있는가? | **각자 작성 · 5분:** 자료·다른 사람의 답을 덮고 모든 항목에 설명·수식·도식 작성, 막힌 부분·남은 질문 표시<br>**함께 확인·기록 · 5분:** 답의 주요 차이·오해 확인, 학습 포인트별 수정한 설명·남은 질문·근거 위치 기록. 다음 복습의 기준<br>**세션 후 보완:** 공유 기록의 문장·그림·수식·근거 정리 |
 
-### 3. 학습 포인트 확인
+### 2. 학습 포인트 확인
 
 **시작에 안내한 학습 포인트를 같은 문장·항목·순서로 다시 확인합니다.**
 
@@ -56,7 +44,7 @@
 
 <!-- point-example:resnet label:ResNet -->
 
-주제: **Residual learning의 필요성과 shortcut의 작동 원리** · 목표: **L2**
+주제: **Residual learning의 필요성과 shortcut의 작동 원리**
 
 - [ ] **1. 왜 층을 더 쌓는 것만으로는 충분하지 않을까요?** 더 깊은 네트워크가 학습 데이터조차 더 잘 맞추지 못할 수 있는 이유와, residual learning이 해결하려는 문제를 설명해 보세요.
 - [ ] **2. Residual block은 입력을 어떻게 출력으로 바꾸나요?** 입력 `x`가 지나는 두 경로를 그리고, `F(x)`가 무엇을 학습하는지와 shortcut이 어떻게 결합되는지 수식으로 나타내 보세요.
@@ -68,7 +56,7 @@
 
 <!-- point-example:transformer label:Transformer -->
 
-주제: **토큰 사이의 정보 교환과 encoder–decoder의 작동 원리** · 목표: **L2**
+주제: **토큰 사이의 정보 교환과 encoder–decoder의 작동 원리**
 
 - [ ] **1. 왜 토큰 사이에 정보를 주고받아야 할까요?** “고양이가 우유를 마신다”에서 각 토큰을 따로 처리하는 경우와 문맥을 함께 반영하는 경우를 비교하고, self-attention을 사용하는 이유를 설명해 보세요.
 - [ ] **2. 다른 토큰의 정보가 내 표현에 어떻게 섞이나요?** 한 토큰의 표현을 갱신하는 과정을 수식과 그림으로 나타내고, Q·K·V·softmax와 여러 head의 역할을 설명해 보세요.
@@ -117,40 +105,40 @@
 
 #### 학습 목표
 
-텐서 연산과 학습 과정의 원리를 이해하고, 실험 설계·모델 진단·표현 분석·피팅 도구로 학습 결과와 한계를 해석한다.
+신경망의 연산·미분·파라미터 갱신과 학습 안정성·일반화의 원리를 설명한다. 실험 설계·모델 진단·표현 분석·추정 도구를 활용해 학습·분석 결과의 신뢰성과 한계를 해석한다.
 
 #### 학습 내용
 
-#### 0-A. 신경망 연산과 학습 기초
+#### 0-A. Neural Network Basics
 
 입력 표현부터 예측·미분·파라미터 갱신·일반화와 실제 훈련 기법까지, 아래 일곱 항목으로 정리합니다. 각 항목을 펼치면 포함 개념과 세부 학습 내용을 확인할 수 있습니다. 포함 개념은 해당 항목에서 실제로 설명하고 이해할 범위입니다.
 
-| 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
+| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
 | Tensor / Linear / MLP | 기초 개념 | 필수 | **포함 개념:** Tensor shape · Batch / Channel / Spatial / Token axes · Reshape / Transpose · Matrix multiplication · Broadcasting · Linear layer · Parameter count · MLP<br>**텐서와 연산:** 축의 의미, reshape·transpose 전후 shape, 행렬 곱·broadcasting의 조건<br>**Linear layer:** 입력·출력 차원, 가중치·bias의 역할, 파라미터 수와 batch 내 가중치 공유<br>**MLP 구성:** Linear와 activation의 조합, 입력 → 은닉 표현 → logits의 수식·코드 연결 |
 | Activation / Initialization | 기초 개념 | 필수 | **포함 개념:** Nonlinearity · ReLU · GELU · SiLU · Sigmoid / Tanh · Saturation · Xavier initialization · He initialization · Vanishing / Exploding gradients<br>**비선형성:** activation의 필요성, 함수별 출력·gradient와 saturation, activation 제거 시의 변화<br>**초기화:** 가중치 크기·대칭성이 activation·gradient에 미치는 영향, Xavier·He의 가정과 적용 대상<br>**직접 확인:** 초기화 크기에 따른 층별 출력·gradient 분포, 소실·폭주가 나타나는 조건 |
 | Loss / Backpropagation / Autograd | 학습 원리 | 필수 | **포함 개념:** Logits / Probability / Target · Cross-entropy · MSE · Computational graph · Chain rule · Backpropagation · Autograd · .grad accumulation / Reset · zero_grad / backward / step<br>**예측과 오차:** logits·확률·target 구분, 분류의 cross-entropy와 회귀의 MSE, loss와 정확도의 차이<br>**미분과 갱신:** 계산 그래프·chain rule로 gradient 계산, backpropagation과 optimizer의 역할 구분<br>**코드 연결:** 작은 forward·backward와 Autograd 비교, 반복된 backward의 .grad 누적과 zero_grad 초기화, backward의 미분·step의 갱신 구분, CrossEntropyLoss의 softmax 전 logits 입력 |
-| Optimization / Learning-rate scheduling | 학습 방법 | 필수 | **포함 개념:** Full-batch / Stochastic / Mini-batch GD · SGD · Momentum · Adam · AdamW · Learning rate · Warmup · Step decay · Cosine decay · L2 penalty · Weight decay<br>**Gradient 계산 단위:** full-batch·stochastic·mini-batch의 사용 데이터·갱신 빈도·gradient 변동 비교<br>**파라미터 갱신:** SGD·Momentum·Adam·AdamW의 갱신식·상태 변수, 학습률과 갱신 크기<br>**학습률 조정:** warmup·step·cosine schedule의 목적과 변화 방식, 학습 곡선·안정성과의 관계<br>**Weight decay:** L2 penalty와 파라미터 감쇠의 관계, Adam의 L2 regularization과 AdamW의 decoupled weight decay 차이 |
+| Optimization / LR Scheduling | 학습 방법 | 필수 | **포함 개념:** Full-batch / Stochastic / Mini-batch GD · SGD · Momentum · Adam · AdamW · Learning rate · Warmup · Step decay · Cosine decay · L2 penalty · Weight decay<br>**Gradient 계산 단위:** full-batch·stochastic·mini-batch의 사용 데이터·갱신 빈도·gradient 변동 비교<br>**파라미터 갱신:** SGD·Momentum·Adam·AdamW의 갱신식·상태 변수, 학습률과 갱신 크기<br>**학습률 조정:** warmup·step·cosine schedule의 목적과 변화 방식, 학습 곡선·안정성과의 관계<br>**Weight decay:** L2 penalty와 파라미터 감쇠의 관계, Adam의 L2 regularization과 AdamW의 decoupled weight decay 차이 |
 | Normalization | 기초 연산 | 필수 | **포함 개념:** BatchNorm (BN) · LayerNorm (LN) · GroupNorm (GN) · RMSNorm · Normalization axes · Mean / Variance / RMS · Scale / Bias · Running statistics · Training / Evaluation modes<br>**정규화 축:** BN·LN·GN·RMSNorm의 계산 대상, 평균·분산·RMS와 batch 의존성<br>**학습과 추론:** 기본 BN의 batch 통계·누적 통계, LN·GN·RMSNorm의 입력 기반 통계, 방식별 scale·bias 적용 차이<br>**구조 연결:** 정규화의 배치와 선택 이유, 초기화와 정규화가 개입하는 시점·역할의 차이 |
 | Regularization | 학습 방법 | 필수 | **포함 개념:** Generalization · Overfitting / Underfitting · Training / Validation gap · Dropout · Weight decay · Data augmentation · Mixup · CutMix<br>**일반화:** 학습·검증 곡선, 과적합·과소적합 구분, regularization 강도와 성능의 관계<br>**모델·파라미터:** dropout의 mask·스케일 조정·학습/추론 차이, weight decay 강도에 따른 파라미터 크기·학습/검증 성능 변화. 갱신식은 Optimization과 연결<br>**데이터 증강:** 증강의 가정, Mixup의 입력·label 혼합, CutMix의 영역 교체·면적 비례 label 혼합 |
 | Training Techniques | 학습 방법 | 중요 | **포함 개념:** Exponential Moving Average (EMA) · Gradient norm / Value clipping · Automatic Mixed Precision (AMP) · FP16 / BF16 · Autocast · Gradient scaling<br>**EMA:** 파라미터의 지수이동평균, 현재 가중치·평균 가중치 구분, 평가용 평균과 teacher 갱신의 목적 차이<br>**Gradient clipping:** norm·value 기반 clipping, gradient 크기·갱신에 미치는 영향, gradient scaling 사용 시 unscale 이후 clipping<br>**Mixed precision:** 연산별 정밀도 선택, autocast와 FP16 gradient scaling의 역할, 메모리·계산 비용·수치 안정성 |
 
-#### 0-B. 실험 설계와 모델·데이터 분석 도구
+#### 0-B. Experiments & Analysis
 
 학습 결과를 신뢰할 수 있는지, 어떤 표현이 만들어졌는지, 관측에 모델이 얼마나 잘 맞는지 살펴봅니다. 각 도구는 ResNet·표현 학습·기하 등 관련 주제와 연결해 반복 활용합니다.
 
-| 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
+| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| 실험 설계와 모델 진단 | 분석 방법 | 필수 | **포함 개념:** Train / Validation / Test split · Data leakage · Random seed · Baseline · Ablation · Learning curves · Feature maps · Activation / Weight / Gradient statistics · Failure cases<br>**실험 설계:** 데이터 분할·누수 방지, 비교 대상·변경 요소·고정 조건, seed·반복 실험과 결과 변동<br>**학습 진단:** loss·평가 지표·학습/검증 곡선, 층별 activation·weight·gradient 분포, 과적합·학습 불안정의 구분<br>**모델 분석:** 동일 입력의 층별 반응·특징맵·학습 전후 변화, 실패 사례와 구조 변경의 영향, 관찰과 해석의 구분 |
-| SVD / PCA / Low-rank approximation | 기초 연산 · 분석 방법 | 필수 | **포함 개념:** Singular Value Decomposition (SVD) · U / Σ / Vᵀ · Singular values · Rank · Low-rank approximation · Data centering · Principal Component Analysis (PCA) · Explained variance · Projection / Reconstruction<br>**분해와 rank:** SVD 각 행렬의 역할·차원, singular value와 주요 방향, rank를 줄일 때의 근사·복원 오차<br>**PCA:** 중심화한 feature 행렬의 SVD, 주성분 방향·설명 분산, 저차원 투영·복원<br>**실제 활용:** feature 압축·주요 변화 방향 분석, 선형 최소제곱·기하적 정렬로의 확장, 저랭크 개념과 LoRA의 연결 |
+| Experiments & Diagnostics | 분석 방법 | 필수 | **포함 개념:** Train / Validation / Test split · Data leakage · Random seed · Baseline · Ablation · Learning curves · Feature maps · Activation / Weight / Gradient statistics · Failure cases<br>**실험 설계:** 데이터 분할·누수 방지, 비교 대상·변경 요소·고정 조건, seed·반복 실험과 결과 변동<br>**학습 진단:** loss·평가 지표·학습/검증 곡선, 층별 activation·weight·gradient 분포, 과적합·학습 불안정의 구분<br>**모델 분석:** 동일 입력의 층별 반응·특징맵·학습 전후 변화, 실패 사례와 구조 변경의 영향, 관찰과 해석의 구분 |
+| SVD / PCA / Low-Rank Approximation | 기초 연산 · 분석 방법 | 필수 | **포함 개념:** Singular Value Decomposition (SVD) · U / Σ / Vᵀ · Singular values · Rank · Low-rank approximation · Data centering · Principal Component Analysis (PCA) · Explained variance · Projection / Reconstruction<br>**분해와 rank:** SVD 각 행렬의 역할·차원, singular value와 주요 방향, rank를 줄일 때의 근사·복원 오차<br>**PCA:** 중심화한 feature 행렬의 SVD, 주성분 방향·설명 분산, 저차원 투영·복원<br>**실제 활용:** feature 압축·주요 변화 방향 분석, 선형 최소제곱·기하적 정렬로의 확장, 저랭크 개념과 LoRA의 연결 |
 | Embedding Analysis | 분석 방법 | 중요 | **포함 개념:** Feature / Embedding · L2 normalization · Cosine / Euclidean distance · PCA baseline · t-SNE · Perplexity · UMAP · n_neighbors / min_dist · k-NN · Linear probing<br>**표현과 거리:** 분석할 layer·feature 선택, 정규화·거리 정의, 같은 샘플의 학습 전후·모델 간 비교<br>**차원 축소:** PCA를 기준으로 t-SNE·UMAP의 이웃 관계와 저차원 배치 비교, t-SNE의 perplexity·UMAP의 n_neighbors와 min_dist·seed에 따른 시각화 변화<br>**해석과 평가:** 2D 군집 크기·거리·분리의 왜곡 가능성, 원래 feature 공간의 이웃 검색·linear probe로 함께 확인 |
-| Least Squares / Robust fitting / RANSAC | 추정 방법 | 중요 | **포함 개념:** Least squares · Residual · Noise / Outlier · Inlier · Minimal sample · Model hypothesis · Consensus · Residual threshold · Max trials / Confidence · Inlier refit<br>**최소제곱:** 관측·모델·파라미터·잔차의 관계, 잔차 제곱합 최소화, 노이즈·이상치에 대한 민감성<br>**RANSAC:** 표본 추출 → 모델 추정 → inlier 판정 → 후보 비교·재추정, 최소 표본 크기·inlier 비율·목표 confidence에 따른 반복 횟수, residual threshold가 inlier 판정·재추정에 미치는 영향<br>**실제 활용:** 이상치가 섞인 직선 피팅으로 시작, feature matching·homography·점군 모델 추정으로 확장, 모델·잔차 정의에 따른 적용 조건 |
+| Least Squares / RANSAC | 추정 방법 | 중요 | **포함 개념:** Least squares · Residual · Noise / Outlier · Inlier · Minimal sample · Model hypothesis · Consensus · Residual threshold · Max trials / Confidence · Inlier refit<br>**최소제곱:** 관측·모델·파라미터·잔차의 관계, 잔차 제곱합 최소화, 노이즈·이상치에 대한 민감성<br>**RANSAC:** 표본 추출 → 모델 추정 → inlier 판정 → 후보 비교·재추정, 최소 표본 크기·inlier 비율·목표 confidence에 따른 반복 횟수, residual threshold가 inlier 판정·재추정에 미치는 영향<br>**실제 활용:** 이상치가 섞인 직선 피팅으로 시작, feature matching·homography·점군 모델 추정으로 확장, 모델·잔차 정의에 따른 적용 조건 |
 
-### 1. CNN 구조와 활용 모델
+### 1. CNN과 비전 모델
 
 #### 학습 목표
 
-Convolution·pooling에서 출발해 residual learning, encoder–decoder와 다중 해상도 feature 구성을 이해하고, 이를 객체 검출·분할의 출력과 학습 구조로 연결한다.
+Convolution·residual learning·encoder–decoder·다중 해상도 feature의 동작과 역할을 설명한다. 검출·분할 모델을 출력·정답 할당·loss·추론 후처리 관점에서 비교하고, 구조별 설계 이유와 계산 비용을 해석한다.
 
 #### 학습 내용
 
@@ -160,19 +148,19 @@ Convolution·pooling에서 출발해 residual learning, encoder–decoder와 다
 |---|---|---|---|
 | Convolution / Pooling | 기초 연산 | 필수 | **포함 개념:** Locality / Weight sharing · Kernel / Stride / Padding / Dilation · Output shape · Receptive field · 1×1 / Group / Depthwise convolution · Parameter count / Computation cost · Max / Average / Global average pooling<br>**필요성:** 이미지의 공간 구조를 활용하는 지역 연결·가중치 공유, 완전 연결 연산과의 차이<br>**공간 연산:** kernel·stride·padding·dilation에 따른 출력 shape·receptive field 계산<br>**연산 비용:** 일반·1×1·group·depthwise convolution의 채널 연결, 파라미터 수·연산량 비교<br>**Pooling:** max·average·global average pooling의 출력, 해상도·정보 손실과 분류 head의 연결 |
 | ResNet / Residual Learning | 모델 · Backbone | 필수 | **포함 개념:** Degradation · Residual learning · Identity / Projection shortcut · Basic block / Bottleneck · Stage · Gradient flow · Pre-activation<br>**필요성:** 깊어진 plain network에서 학습 오차까지 커지는 degradation 문제, residual learning의 접근<br>**잔차와 shortcut:** F(x) + x의 의미, residual branch가 학습하는 함수와 identity 경로의 역할<br>**블록과 stage:** basic block·bottleneck, 해상도·채널 변화, identity·projection shortcut의 조건과 gradient 흐름<br>**설계 근거:** shortcut ablation, 원 ResNet과 후속 pre-activation 변형의 차이 |
-| Encoder–Decoder / Multi-scale Features | 모델 · 구성 요소 | 필수 | **포함 개념:** Semantic / Instance / Panoptic segmentation · U-Net · Encoder–Decoder · Skip connection / Concatenation · Up-convolution / Crop · FPN · Top-down pathway / Lateral connection · Feature pyramid / Addition<br>**과제 구분:** semantic은 픽셀별 범주, instance는 개별 객체의 mask, panoptic은 모든 픽셀의 범주와 셀 수 있는 객체의 개체 구분을 함께 예측<br>**U-Net · 분할 모델:** 문맥을 얻는 encoder와 위치 정보를 복원하는 decoder, encoder feature의 concatenation과 shape 변화<br>**U-Net 해상도 정렬:** 원 논문의 up-convolution·crop, interpolation 등 후속 구현과의 차이<br>**FPN · Neck:** backbone의 여러 stage → top-down upsampling·lateral 1×1 convolution·addition → 다중 해상도 feature, 결합 전 해상도·채널 정렬<br>**함께 비교:** U-Net의 픽셀별 출력과 FPN의 feature 출력, concatenation·addition의 차이, ResNet shortcut과 각 연결의 목적 비교 |
+| Encoder–Decoder / Multi-Scale Features | 모델 · 구성 요소 | 필수 | **포함 개념:** Semantic / Instance / Panoptic segmentation · U-Net · Encoder–Decoder · Skip connection / Concatenation · Up-convolution / Crop · FPN · Top-down pathway / Lateral connection · Feature pyramid / Addition<br>**과제 구분:** semantic은 픽셀별 범주, instance는 개별 객체의 mask, panoptic은 모든 픽셀의 범주와 셀 수 있는 객체의 개체 구분을 함께 예측<br>**U-Net · 분할 모델:** 문맥을 얻는 encoder와 위치 정보를 복원하는 decoder, encoder feature의 concatenation과 shape 변화<br>**U-Net 해상도 정렬:** 원 논문의 up-convolution·crop, interpolation 등 후속 구현과의 차이<br>**FPN · Neck:** backbone의 여러 stage → top-down upsampling·lateral 1×1 convolution·addition → 다중 해상도 feature, 결합 전 해상도·채널 정렬<br>**함께 비교:** U-Net의 픽셀별 출력과 FPN의 feature 출력, concatenation·addition의 차이, ResNet shortcut과 각 연결의 목적 비교 |
 | Object Detection | 모델 | 필수 | **포함 개념:** Bounding box / Class prediction · Faster R-CNN · RPN / Anchor box / Proposal · RoIPool · Objectness · Box regression · YOLOX · One-stage / Two-stage · Anchor-based / Anchor-free · Multi-scale features · Decoupled head · SimOTA / Dynamic-k assignment · Classification / Objectness / Box loss · IoU / NMS · AP / Latency<br>**문제와 출력:** 여러 객체의 위치·종류 예측, box 좌표 표현·IoU, 분류·objectness·위치 오차의 학습 신호<br>**Faster R-CNN:** 공유 backbone → RPN의 proposal 생성 → RoIPool → 분류·box 보정, anchor·proposal의 정답 할당과 각 loss<br>**YOLOX 구조:** backbone·다중 스케일 neck → 분리된 분류·위치 추정 head, anchor box 없이 grid 위치와 box offset을 이용하는 예측·좌표 변환<br>**YOLOX 학습:** SimOTA의 후보 영역·분류/위치 비용·dynamic-k 양성 예측 선택·중복 할당 해결, 선택 결과에 따른 class·objectness·box loss<br>**학습과 추론:** 정답 할당과 NMS의 역할 구분, YOLOX의 anchor-free 예측에서도 필요한 NMS, Faster R-CNN의 proposal 선택·후처리와 비교<br>**평가와 근거:** AP50·AP@[.5:.95]의 차이, 입력 해상도·장치·batch·정밀도·후처리 포함 여부를 맞춘 latency 비교, YOLOX의 head·anchor-free·정답 할당 ablation |
 | Instance Segmentation | 모델 | 중요 | **포함 개념:** Mask R-CNN · Instance mask · RoIPool / RoIAlign · Coordinate quantization · Bilinear sampling · Mask branch / Target · Pixel-wise binary loss · Multi-task learning<br>**필요성:** 객체별 bounding box만으로 표현하기 어려운 경계·형상, semantic segmentation과의 출력 차이<br>**Mask R-CNN 구조:** Faster R-CNN의 분류·box 예측과 병렬로 추가한 mask branch, 검출에서 분할로의 확장<br>**공간 정렬:** RoIPool의 좌표 양자화 문제, RoIAlign의 bilinear sampling과 위치 정보 보존<br>**Mask 학습·추론:** RoI별 mask target·픽셀별 binary loss, 분류·box loss와의 결합, 추론 시 예측 class에 해당하는 mask 선택<br>**설계 근거:** 원 논문의 RoIAlign·mask branch 관련 ablation과 효과가 확인된 조건 |
 
-### 2. Transformer 구조와 비전·멀티모달 활용
+### 2. Transformer와 비전·멀티모달 모델
 
 #### 학습 목표
 
-Attention·Transformer 블록·위치 표현과 비전 backbone의 동작을 이해하고, 계산·생성 효율화와 검출·dense prediction·prompt 기반 분할·이미지–언어 결합의 구조로 연결한다.
+Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 모델의 정보 결합 구조를 설명한다. 과제별 출력·학습 목표·추론 방식을 비교하고, 연산·메모리 효율화 기법의 적용 조건과 비용을 해석한다.
 
 #### 학습 내용
 
-#### 2-A. Attention·Transformer 원리와 비전 백본
+#### 2-A. Transformer Foundations
 
 아래 다섯 항목으로 공통 원리와 비전 backbone을 공부합니다. 각 항목은 학습 묶음이며, 분량과 이해의 깊이에 따라 회차를 나눌 수 있습니다.
 
@@ -184,7 +172,7 @@ Attention·Transformer 블록·위치 표현과 비전 backbone의 동작을 이
 | ViT / Swin Transformer | 모델 · Backbone | 필수 | **포함 개념:** ViT · Patch embedding · CLS token / Readout · Learned positional embedding · Global attention · Swin Transformer · Window / Shifted-window attention · Patch merging · Relative position bias · Multi-scale features<br>**ViT:** 이미지 → patch·Linear projection → CLS·위치 embedding → encoder → 분류 출력, 단계별 token 수·shape 추적<br>**ViT 출력·해상도:** 원 모델의 CLS 기반 분류, 해상도 변경 시 위치 embedding 보간, pooling 등 readout 변형과의 차이<br>**Swin:** window 내부 attention과 shifted window의 정보 교환, patch merging에 따른 해상도·채널 변화와 상대 위치 bias<br>**비전 backbone 비교:** ViT의 전역 attention·일정한 token 해상도, Swin·CNN의 계층적 feature, dense prediction에 전달하는 출력<br>**설계 근거:** 국소성·계층 구조 등 inductive bias, 데이터 규모·사전학습·입력 해상도에 따른 성능·계산 비용의 변화 |
 | Efficient Attention / KV Cache | 구현 기법 | 중요 | **포함 개념:** Attention computation / Memory cost · FlashAttention · Tiling / Online softmax · GPU memory IO · KV cache · Autoregressive generation · Prefill / Decode · Memory–Computation trade-off<br>**비용의 출처:** projection·attention score·가중합의 연산, 토큰 수에 따른 N×N 행렬과 중간 결과 저장 비용<br>**FlashAttention:** tiling·online softmax로 attention의 수학적 계산을 유지하며 GPU 메모리 이동·중간 행렬 저장을 줄이는 원리. Dense attention의 연산량은 토큰 수에 대해 여전히 이차적으로 증가<br>**KV cache:** 자기회귀 생성에서 이전 토큰의 K·V를 저장·재사용하는 조건, prefill과 토큰별 decode, 층별 cache의 shape·메모리 증가<br>**적용 범위 비교:** FlashAttention의 학습·추론 계산과 KV cache의 생성 시 재사용, 계산 절감·메모리 사용의 교환 관계<br>**학습 깊이:** 작은 예제로 cache 유무의 계산 흐름·메모리 사용 비교, GPU kernel 구현과 세부 최적화는 선택 심화 |
 
-#### 2-B. 비전 과제와 멀티모달 활용
+#### 2-B. Vision & Multimodal Models
 
 1장의 검출·분할과 연결해 출력 구조를 비교합니다. VLM에서는 이미지·언어의 연결 구조를 먼저 이해하고, CLIP 등 표현 학습의 원리는 3장에서 이어서 공부합니다.
 
@@ -199,7 +187,7 @@ Attention·Transformer 블록·위치 표현과 비전 backbone의 동작을 이
 
 #### 학습 목표
 
-표현을 만드는 학습 신호와 teacher·target의 역할을 이해하고, 사전학습 모델의 평가·전이·조정 방식과 라벨·분포 변화에 따른 활용 조건을 구분한다.
+대조·복원·teacher–student 학습에서 표현을 만드는 학습 신호와 target 생성 방식을 설명한다. 사전학습 표현의 평가·전이·조정 방법을 비교하고, 라벨 가용성·분포 변화·데이터 접근 조건에 맞춰 결과를 해석한다.
 
 #### 학습 내용
 
@@ -222,7 +210,7 @@ Attention·Transformer 블록·위치 표현과 비전 backbone의 동작을 이
 
 #### 학습 목표
 
-생성 모델의 확률적 목표와 잠재 표현을 이해하고, noise·score·velocity의 학습 신호, 네트워크 구조·조건 입력·sampling을 연결해 설명한다.
+생성 모델의 확률적 목표와 연속·이산 잠재 표현, noise·score·velocity의 학습 신호를 설명한다. 네트워크·조건 입력·sampling의 역할을 구분하고, 구조와 생성 절차에 따른 품질·다양성·계산 비용을 해석한다.
 
 #### 학습 내용
 
@@ -242,7 +230,7 @@ Attention·Transformer 블록·위치 표현과 비전 backbone의 동작을 이
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
 | DDPM | 생성 모델 | 필수 | **포함 개념:** Forward noising · Noise schedule · Closed-form noisy sample · ε-prediction · Denoising loss · Timestep embedding · U-Net · Reverse sampling<br>**Forward와 target:** 이미지에 Gaussian noise를 더하는 과정, noise schedule과 임의 timestep의 noisy sample을 바로 만드는 식, 정답 noise 생성<br>**구조와 학습:** noisy 입력·timestep embedding → U-Net → ε 예측, 학습에서 사용하는 이미지·noise·timestep과 denoising loss<br>**Reverse sampling:** 예측 noise로 역방향 평균을 계산하는 과정, 분산·추가 noise의 역할과 반복 갱신<br>**학습과 생성:** 정답 이미지에서 학습용 입력을 만드는 과정과 noise에서 이미지를 생성하는 과정, 학습 target·추론 시 이용 가능한 정보 구분 |
-| Score-based Modeling | 생성 모델 | 필수 | **포함 개념:** Score · Denoising score matching · Noise-conditioned network · Score–ε relationship · Reverse-time SDE · Probability-flow ODE<br>**Score의 의미:** 입력에 대한 log-density의 gradient, noise 수준에 따라 달라지는 데이터 분포와 score 방향<br>**학습 신호:** Gaussian perturbation의 conditional score를 이용한 denoising score matching, noise-conditioned network와 ε 예측의 관계<br>**연속 시간 관점:** forward·reverse-time SDE의 시간 방향·drift·noise 항, 역과정에서 학습한 score를 사용하는 위치<br>**Probability-flow ODE:** 정확한 score를 가정할 때 SDE와 같은 시간별 분포를 따르는 결정적 과정, 분포와 개별 궤적의 차이<br>**이해 범위:** 각 식의 항·noise 유무·학습 신호와 생성 과정의 연결, 다음 Sampling에서 작은 예제의 갱신 계산 |
+| Score-Based Modeling | 생성 모델 | 필수 | **포함 개념:** Score · Denoising score matching · Noise-conditioned network · Score–ε relationship · Reverse-time SDE · Probability-flow ODE<br>**Score의 의미:** 입력에 대한 log-density의 gradient, noise 수준에 따라 달라지는 데이터 분포와 score 방향<br>**학습 신호:** Gaussian perturbation의 conditional score를 이용한 denoising score matching, noise-conditioned network와 ε 예측의 관계<br>**연속 시간 관점:** forward·reverse-time SDE의 시간 방향·drift·noise 항, 역과정에서 학습한 score를 사용하는 위치<br>**Probability-flow ODE:** 정확한 score를 가정할 때 SDE와 같은 시간별 분포를 따르는 결정적 과정, 분포와 개별 궤적의 차이<br>**이해 범위:** 각 식의 항·noise 유무·학습 신호와 생성 과정의 연결, 다음 Sampling에서 작은 예제의 갱신 계산 |
 | Diffusion Sampling | 생성 방법 | 필수 | **포함 개념:** DDIM · η · Timestep subsampling · Deterministic / Stochastic updates · Euler / Heun · Discretization error · NFE<br>**학습과 sampling:** 학습한 denoiser를 활용하며 생성 갱신식을 바꾸는 DDIM, timestep 부분집합과 학습 noise schedule의 구분<br>**DDIM 갱신:** 현재 noisy sample → 원본 추정 → 다음 sample, η에 따른 추가 noise와 같은 초기 noise에서의 결정성<br>**ODE 계산:** Euler의 한 번 갱신과 Heun의 기울기 재평가·보정, 작은 예제로 이동 방향·다음 상태 비교<br>**비용과 오차:** 단계 크기·이산화 오차·품질의 관계, step 수와 network function evaluations(NFE)의 차이<br>**비교 조건:** 같은 모델·초기 noise·조건·호출 예산에서 sampler·시간 격자 비교, 이후 Flow Matching·Rectified Flow의 ODE sampling과 연결 |
 | Conditioning & Guidance | 구성 요소 · 생성 방법 | 필수 | **포함 개념:** Class / Text conditioning · Cross-attention · Feature modulation / FiLM · AdaLN · Condition dropout · Classifier-free guidance<br>**조건 입력:** class·text 표현을 생성 네트워크에 전달하는 위치, noisy 입력·시간 정보·조건 정보의 역할 구분<br>**Cross-attention:** 이미지 feature에서 Q, 조건 token에서 K·V를 만드는 정보 결합과 tensor shape, 2장의 attention 원리 적용<br>**Feature modulation:** 조건으로 만든 scale·shift를 feature에 적용하는 FiLM, normalization 뒤의 조건별 affine 변환인 AdaLN과 연산 위치 비교<br>**CFG 학습·추론:** condition dropout으로 조건부·무조건부 예측을 학습, 두 예측을 guidance scale로 조합하는 갱신 신호<br>**효과와 비용:** 조건 반영 강도·다양성·과도한 guidance의 영향, 조건부·무조건부 평가의 계산 비용과 뒤 모델들의 적용 위치 |
 | Latent Diffusion | 생성 모델 | 필수 | **포함 개념:** Autoencoder · Latent compression · Autoencoder regularization · Frozen encoder / Decoder · Latent denoising · Text conditioning<br>**압축 단계:** 먼저 학습한 autoencoder의 이미지 → latent → 복원, 압축률·복원 품질과 KL·VQ regularization의 차이<br>**생성 학습:** 고정한 autoencoder로 latent를 만들고 denoiser 학습, pixel 공간과 latent 공간의 입력·target·계산 비용 비교<br>**조건과 추론:** text encoder·cross-attention·CFG의 적용 위치, noise latent → 반복 denoising → image decoder의 전체 흐름<br>**표현의 한계:** autoencoder의 복원 손실과 생성 단계의 오차 구분, 연속·이산 latent와 prior를 4-A의 VAE·VQ 계열에 연결 |
