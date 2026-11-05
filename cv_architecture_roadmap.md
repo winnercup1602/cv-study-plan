@@ -134,17 +134,17 @@ Dataset에서 batch를 만들고 작은 신경망의 입력·예측·loss·gradi
 
 #### 학습 목표
 
-Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 모델의 정보 결합 구조를 설명한다. 과제별 출력·학습 목표·추론 방식을 비교하고, 연산·메모리 효율화 기법의 적용 조건과 비용을 해석한다.
+Attention의 계산에서 Transformer 블록·학습·생성으로 연결하고, 이미지의 토큰화·위치 표현과 연산·메모리 효율화를 설명한다. 공통 구조를 익힌 뒤 객체 검출·밀집 예측·프롬프트 분할·멀티모달 응답 생성에 적용하며, 과제별 입력·출력·학습 신호·정보 결합 방식을 비교한다.
 
 #### 학습 내용
 
 #### 1-A. Transformer Foundations
 
-##### 5회차 · 2026.12.03 (목) · 발표자: 곽명조 · Attention의 계산과 정보 흐름
+##### 5회차 · 2026.12.03 (목) · 발표자: 곽명조 · Attention: 토큰 사이의 정보 결합
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Attention | 기초 연산 | 필수 | **포함 개념:** Query / Key / Value · Scaled dot-product attention · Softmax axis · Self-attention / Cross-attention · Multi-head attention · Causal / Padding mask · Tensor shape / Computation cost · Permutation equivariance / Position information<br>**필요성:** 토큰마다 필요한 문맥을 다른 토큰에서 가져오는 방식, 입력에 따라 달라지는 정보 결합<br>**계산 흐름:** Q·K·V의 생성과 shape → QKᵀ·√d_k 스케일링 → mask·softmax → V의 가중합, 작은 입력 예제의 값·차원 추적<br>**정보의 출처:** self-attention과 cross-attention에서 Q·K·V를 가져오는 입력, query·key 길이가 다를 때의 출력 shape<br>**Head와 mask:** head별 projection·결합, softmax 정규화 축, causal·padding mask가 허용하는 정보 범위<br>**계산 비용:** 토큰 수에 따른 attention 행렬의 크기·연산량·메모리 사용 변화<br>**위치 정보로 연결:** 위치 정보와 순서 의존 mask가 없을 때 self-attention의 permutation equivariance, 토큰의 내용과 함께 순서·공간 배치를 전달해야 하는 이유<br>**Query 용어:** Q는 현재 표현을 projection해 만드는 조회 벡터의 계산 역할. 뒤에서 만나는 learned query token은 모델이 학습하는 표현이며, attention에 참여할 때 Q·K·V를 만드는 입력이 될 수 있다는 점을 구분 |
+| Attention | 기초 연산 | 필수 | **포함 개념:** Query / Key / Value · Scaled dot-product attention · Softmax axis · Self-attention / Cross-attention · Multi-head attention · Causal / Padding mask · Tensor shape / Computation cost · Permutation equivariance / Position information<br>**필요성:** 토큰마다 필요한 문맥을 다른 토큰에서 가져오는 방식, 입력에 따라 달라지는 정보 결합<br>**계산 흐름:** Q·K·V의 projection과 shape → QKᵀ·√d_k 스케일링 → mask·softmax → V의 가중합 → head 결합·출력 projection. 작은 입력에서 값·차원·softmax 축을 추적<br>**정보의 출처와 범위:** self-attention과 cross-attention에서 Q·K·V를 가져오는 입력, query·key 길이가 다를 때의 출력 shape, causal·padding mask가 허용하는 정보 범위를 비교<br>**계산 비용과 위치:** 토큰 수에 따른 attention 행렬·연산·메모리 증가. 위치 정보와 순서 의존 mask가 없을 때의 permutation equivariance를 확인하고, 순서·공간 배치를 별도로 전달해야 하는 이유를 설명<br>**Query 용어:** attention의 Q는 입력 표현을 projection해 만드는 조회 벡터의 계산 역할. learned query token은 모델이 학습하는 표현이며, attention에서 Q·K·V를 만드는 입력이 될 수 있다는 점을 구분<br>**학습 범위:** 작은 self/cross-attention·mask 예제로 계산을 완성. FlashAttention·cache는 8회차에서 연결 |
 
 <!-- study-references:5 -->
 
@@ -152,11 +152,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 6회차 · 2026.12.10 (목) · 발표자: 박준규 · Transformer 구조와 학습·생성
+##### 6회차 · 2026.12.10 (목) · 발표자: 박준규 · Transformer: 블록 구조와 학습·생성
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Transformer Architecture | 모델 구조 | 필수 | **포함 개념:** Token embedding · Sinusoidal positional encoding · Encoder / Decoder · FFN · Residual connection · LayerNorm / RMSNorm · Pre-Norm / Post-Norm · GPT / BERT · Next-token prediction · Masked language modeling · Training / Generation<br>**입력과 기본 위치 표현:** token embedding에 sinusoidal positional encoding을 더하는 원 Transformer의 입력, 두 벡터의 차원·역할과 encoder·decoder에 들어가는 위치. 고정된 위치 표현과 학습하는 위치 embedding의 차이<br>**전체 구조:** 위치 정보가 포함된 입력 → encoder의 self-attention·FFN → decoder의 causal self-attention·cross-attention·FFN → 출력, residual·normalization의 연결<br>**Attention과 FFN의 역할:** attention은 서로 다른 token의 정보를 결합하고, 기본 position-wise FFN은 각 token의 채널 표현을 같은 가중치의 함수로 독립 변환. token 간 정보 교환과 token 내부 비선형 변환, 각 출력 shape를 구분<br>**블록 변형:** Pre-Norm·Post-Norm의 연산 순서와 gradient 경로, 0장에서 배운 LayerNorm·RMSNorm의 역할을 연결해 비교<br>**GPT 비교 사례:** decoder-only 구조와 causal self-attention, 한 칸 이동한 입력·target의 next-token prediction과 loss<br>**BERT 비교 사례:** encoder-only 구조와 양방향 self-attention, token·segment·position embedding, 가린 token을 맞히는 MLM 입력·target·loss 위치<br>**학습과 활용:** GPT의 학습 시 병렬 계산·자기회귀 생성, BERT의 입력 문맥과 downstream head. GPT·BERT는 구조·정보 범위·학습 목표 비교에 집중하고 세대별 전체 재현은 심화로 확장 |
+| Transformer Architecture | 모델 구조 | 필수 | **포함 개념:** Token embedding · Sinusoidal positional encoding · Encoder / Decoder · FFN · Residual connection · LayerNorm / RMSNorm · Pre-Norm / Post-Norm · GPT / BERT · Next-token prediction · Masked language modeling · Training / Generation<br>**입력과 위치:** token embedding과 sinusoidal positional encoding의 역할·차원, 고정된 위치 표현과 학습하는 위치 embedding의 차이를 확인<br>**전체 구조:** encoder의 self-attention·FFN과 decoder의 causal self-attention·cross-attention·FFN을 연결. 한 블록과 전체 encoder–decoder의 입력·출력·residual·normalization 위치를 추적<br>**블록의 역할:** attention은 token 사이의 정보를 결합하고, 기본 position-wise FFN은 각 token의 채널 표현을 같은 가중치로 독립 변환. Pre-Norm·Post-Norm의 순서·gradient 경로와 LayerNorm·RMSNorm의 차이를 0장에 연결<br>**GPT·BERT 비교:** GPT의 decoder-only·causal attention·한 칸 이동한 next-token target과 BERT의 encoder-only·양방향 attention·MLM target을 비교. 접근 가능한 정보·loss 위치·출력 head를 작은 예제로 확인<br>**학습과 생성:** 정답 문맥으로 여러 위치의 loss를 병렬 계산하는 GPT 학습과, 이전 출력 token에 의존하는 자기회귀 생성을 구분. 한 번의 학습 forward와 두 번의 생성 step을 추적<br>**학습 범위:** 공통 블록·전체 정보 흐름을 중심으로 다루고 GPT·BERT는 구조·정보 범위·목표의 비교 사례로 사용. 모델별 전체 재현·세대별 발전사는 확장 학습으로 연결 |
 
 <!-- study-references:6 -->
 
@@ -167,12 +167,12 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 7회차 · 날짜 미정 · 발표자: 미정 · 위치 표현과 ViT·Swin
+##### 7회차 · 날짜 미정 · 발표자: 미정 · Vision Transformer: ViT·Swin과 공간 표현
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Positional Encoding Variants | 구성 요소 | 중요 | **포함 개념:** Learned absolute position · Relative position bias · RoPE · Embedding / Attention score / Q–K injection · 1D / 2D position · Sequence length / Resolution change<br>**비교 출발점:** 02에서 배운 sinusoidal encoding을 기준으로, 위치 정보를 입력 embedding·attention score·Q/K 중 어디에 반영하는지 비교<br>**Learned absolute position:** 위치별 embedding의 학습, 고정된 sinusoidal encoding과의 차이, 학습 범위를 벗어난 길이·해상도의 처리<br>**Relative position bias:** 토큰 간 상대적 거리·방향을 attention score에 반영하는 방식, 상대 위치와 절대 위치의 구분<br>**RoPE:** Q·K에 적용하는 위치별 회전, 두 토큰의 상대 위치가 내적에 반영되는 방식과 적용 지점<br>**비전으로 확장:** 1D 문장 위치와 2D 이미지 위치, ViT·Swin에서의 선택과 해상도·window 크기 변화에 따른 처리 |
-| ViT / Swin Transformer | 모델 · Backbone | 필수 | **포함 개념:** ViT · Patch embedding · CLS token / Readout · Learned positional embedding · Global attention · Swin Transformer · Window / Shifted-window attention · Patch merging · Relative position bias · Multi-scale features<br>**ViT:** 이미지 → patch·Linear projection → CLS·위치 embedding → encoder → 분류 출력, 단계별 token 수·shape 추적<br>**ViT 출력·해상도:** 원 모델의 CLS 기반 분류, 해상도 변경 시 위치 embedding 보간, pooling 등 readout 변형과의 차이<br>**Swin:** window 내부 attention과 shifted window의 정보 교환, patch merging에 따른 해상도·채널 변화와 상대 위치 bias<br>**비전 backbone 비교:** ViT의 전역 attention·일정한 token 해상도, Swin·CNN의 계층적 feature, dense prediction에 전달하는 출력<br>**설계 근거:** 국소성·계층 구조 등 inductive bias, 데이터 규모·사전학습·입력 해상도에 따른 성능·계산 비용의 변화 |
+| ViT / Swin Transformer | 모델 · Backbone | 필수 | **포함 개념:** ViT · Patch embedding · CLS token / Readout · Learned positional embedding · Global attention · Swin Transformer · Window / Shifted-window attention · Patch merging · Relative position bias · Multi-scale features<br>**ViT 전체 흐름:** 이미지 → patch·Linear projection → CLS·위치 embedding → encoder → 분류 출력을 먼저 완성. 이미지 크기·patch 크기에 따른 token 수와 각 단계의 shape를 추적<br>**공간 정보와 출력:** ViT의 learned absolute position과 해상도 변경 시 위치 embedding 보간, 원 모델의 CLS readout과 pooling 변형을 비교. patch 위치와 token 순서의 대응을 확인<br>**Swin의 핵심 변화:** window 내부 attention → shifted window의 정보 교환 → patch merging을 따라 해상도·채널 변화를 확인. 상대 위치 bias의 적용 위치를 연결<br>**Backbone 비교:** ViT의 전역 attention·일정한 token 해상도와 Swin의 국소 attention·계층적 feature를 비교. dense prediction에 전달하는 출력과 데이터 규모·입력 해상도·계산 비용의 관계를 해석<br>**학습 범위:** ViT의 입력부터 출력까지를 중심으로 Swin의 window·shift·계층 구조를 비교. 세부 구현 최적화와 모든 변형의 상세 유도는 확장 학습으로 연결 |
+| Positional Encoding Variants | 구성 요소 | 중요 | **포함 개념:** Sinusoidal / Learned absolute position · Relative position bias · RoPE · Embedding / Attention score / Q–K injection · 1D / 2D position · Sequence length / Resolution change<br>**모델에서 비교:** 6회차의 sinusoidal encoding과 앞서 본 ViT의 absolute position·Swin의 relative position bias를 기준으로, 위치 정보를 embedding·attention score 중 어디에 넣는지 정리<br>**RoPE:** Q·K에 위치별 회전을 적용하고 두 token의 상대 위치가 내적에 반영되는 핵심 원리·적용 지점을 작은 예제로 확인<br>**학습 범위:** 1D·2D 위치, 길이·해상도 변경의 차이와 세 방식의 적용 위치를 비교. 위치 표현의 전체 분류·긴 문맥 확장 기법·RoPE 전체 수식 증명은 확장 학습으로 연결 |
 
 <!-- study-references:7 -->
 
@@ -182,11 +182,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 8회차 · 날짜 미정 · 발표자: 미정 · Attention 효율화와 KV Cache
+##### 8회차 · 날짜 미정 · 발표자: 미정 · Transformer 효율화: FlashAttention·KV cache
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Efficient Attention / KV Cache | 구현 기법 | 중요 | **포함 개념:** Attention computation / Memory cost · FlashAttention · Tiling / Online softmax · GPU memory IO · KV cache · Autoregressive generation · Prefill / Decode · MHA / MQA / GQA · Query heads / Key–Value heads · KV sharing / Cache shape · Memory–Computation trade-off<br>**비용의 출처:** projection·attention score·가중합의 연산, token 수에 따른 N×N 행렬과 중간 결과 저장 비용<br>**FlashAttention:** tiling·online softmax로 attention의 수학적 계산을 유지하며 GPU 메모리 이동·중간 행렬 저장을 줄이는 원리. Dense attention의 연산량은 token 수에 대해 여전히 이차적으로 증가<br>**KV cache:** 자기회귀 생성에서 이전 token의 K·V를 저장·재사용하는 조건, prefill과 token별 decode, 층별 cache의 shape·메모리 증가<br>**MHA·MQA·GQA:** 여러 query head에 대해 K·V를 각각 유지하는 MHA, 하나를 공유하는 MQA, 그룹별로 공유하는 GQA를 비교. 작은 head 수 예제로 Q/K/V projection·head 대응과 cache shape·저장량을 추적<br>**효율화의 구분:** FlashAttention은 계산 순서·IO, KV cache는 이전 token의 계산 재사용, MQA/GQA는 공유하는 KV head 수를 바꾸는 설계. MQA/GQA의 메모리·추론 비용과 표현 능력·품질 사이의 교환 관계를 논문 조건에서 비교<br>**학습 깊이:** 작은 예제로 cache 유무·KV 공유 수준에 따른 흐름·shape·저장량 비교. GPU kernel 구현·checkpoint 변환 학습과 세부 최적화는 확장 학습으로 연결 |
+| Efficient Attention / KV Cache | 모델 구조 · 구현 기법 | 중요 | **포함 개념:** Attention computation / Memory cost · FlashAttention · Tiling / Online softmax · GPU memory IO · KV cache · Autoregressive generation · Prefill / Decode · MHA / MQA / GQA · Query heads / Key–Value heads · KV sharing / Cache shape · Memory–Computation trade-off<br>**비용의 출처:** 7회차의 patch token 수와 6회차의 자기회귀 생성을 출발점으로, projection·attention 행렬·중간 결과 저장·반복 계산의 비용을 구분<br>**FlashAttention:** tiling·online softmax로 수학적으로 같은 dense attention을 계산하며 GPU 메모리 이동·중간 행렬 저장을 줄이는 원리. Dense attention의 연산량은 token 수에 대해 여전히 이차적으로 증가<br>**KV cache:** 자기회귀 생성에서 이전 token의 K·V를 저장·재사용하는 조건, prefill과 token별 decode, 층별 cache shape·메모리 증가를 작은 예제로 추적<br>**MHA·MQA·GQA:** query head별 K·V를 유지하는 MHA, 하나를 공유하는 MQA, 그룹별로 공유하는 GQA의 projection·head 대응·cache 저장량을 비교<br>**효율화의 구분:** FlashAttention의 계산 순서·IO, cache의 계산 재사용, MQA/GQA의 KV head 공유를 구분. 품질·메모리·추론 비용은 같은 모델·길이·장비 등 비교 조건을 확인<br>**학습 범위:** shape·저장량·한 번의 decode 흐름을 중심으로 다룸. GPU kernel 구현·세부 성능 튜닝·checkpoint 변환 학습은 확장 학습으로 연결 |
 
 <!-- study-references:8 -->
 
@@ -200,11 +200,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 #### 1-B. Vision & Multimodal Models
 
-##### 9회차 · 날짜 미정 · 발표자: 미정 · DETR와 Deformable Attention
+##### 9회차 · 날짜 미정 · 발표자: 미정 · 객체 검출: DETR·Deformable DETR
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| DETR / Deformable DETR | 모델 | 필수 | **포함 개념:** DETR · Set prediction · Learned object query / Output slots · CNN backbone / Transformer encoder–decoder · Bipartite / Hungarian matching · Matching cost / Training loss · No-object class · Bounding box prediction · NMS-free inference · Deformable DETR · Reference points / Sampling offsets / Attention weights · Bilinear sampling / Multi-scale deformable attention · YOLOv10 / One-to-many–One-to-one heads<br>**필요성:** 객체의 순서가 정해지지 않은 정답 집합, 예측 중복과 정답 할당을 함께 다루는 set prediction. 원 DETR의 느린 수렴·고해상도 feature 처리 문제를 deformable attention의 동기로 연결<br>**DETR 구조와 query:** CNN feature·위치 정보 → encoder → object query를 사용하는 decoder → 고정 개수의 class·box 예측. object query는 출력 slot을 구분하는 학습 표현이며, attention 연산에서 계산하는 Q와 역할·출처를 구분<br>**DETR 학습:** Hungarian matching 비용과 matching 후 계산하는 class·box loss의 차이, unmatched query의 no-object 처리를 작은 예제로 확인<br>**Deformable attention:** query에서 reference point 주변의 sampling offset·weight를 예측하고, 선택한 위치의 feature를 bilinear sampling·가중합하는 흐름. 모든 위치에 QK 점수를 계산하는 기본 attention과 참조 위치·가중치 생성 방식을 비교<br>**다중 해상도와 효과:** 여러 해상도의 feature에서 소수 위치를 참조하는 구조, 작은 객체·공간 해상도·연산 비용·학습 수렴의 관계를 ablation과 함께 확인<br>**YOLOv10 비교 범위:** 학습 시 one-to-many·one-to-one head, 추론 시 one-to-one head를 쓰는 흐름과 NMS 없는 출력을 비교. 공통 학습은 두 head의 역할·추론 경로까지로 잡고, 세부 할당 metric·top-one 유도는 확장 학습으로 연결 |
+| DETR / Deformable DETR | 모델 | 필수 | **포함 개념:** DETR · Set prediction · Learned object query / Output slots · CNN backbone / Transformer encoder–decoder · Bipartite / Hungarian matching · Matching cost / Training loss · No-object class · Bounding box prediction · NMS-free inference · Deformable DETR · Reference points / Sampling offsets / Attention weights · Bilinear sampling / Multi-scale deformable attention<br>**필요성과 입력:** 순서가 없는 객체 정답 집합을 고정 개수의 class·box 예측에 대응시키는 문제. Backbone을 feature map·stride·채널을 반환하는 모듈로 읽고, 1×1 projection과 위치 정보가 encoder 입력으로 연결되는 shape를 확인<br>**DETR 구조와 query:** feature → encoder → learned object query를 사용하는 decoder → class·box 출력. Object query는 출력 slot을 구분하는 학습 표현이며 attention에서 계산하는 Q와 역할·출처를 구분<br>**DETR 학습·추론:** 작은 객체 집합으로 Hungarian matching 비용과 matching 후의 class·box loss를 구분. Unmatched query의 no-object 처리, 고정 출력 slot과 NMS 없는 추론의 관계를 확인<br>**Deformable DETR:** 원 DETR의 수렴·고해상도 feature 처리 문제에서 출발. Query가 reference point 주변 offset·weight를 예측하고 소수 위치의 feature를 bilinear sampling·가중합하는 흐름과 multi-scale 참조를 비교<br>**근거와 비교 범위:** DETR의 전체 학습·추론을 중심으로 Deformable DETR의 참조 위치·가중치 생성·수렴·작은 객체 성능 변화를 확인. YOLOv10은 one-to-many/one-to-one head·NMS-free 추론의 짧은 비교와 Related Work로 연결 |
 
 <!-- study-references:9 -->
 
@@ -214,11 +214,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 10회차 · 날짜 미정 · 발표자: 미정 · DPT와 밀집 예측
+##### 10회차 · 날짜 미정 · 발표자: 미정 · 밀집 예측: DPT와 공간 해상도 복원
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Dense Prediction / DPT | 모델 | 필수 | **포함 개념:** Dense prediction · Depth / Semantic segmentation · ViT / Hybrid backbone · Intermediate tokens · Reassemble · Spatial feature map · Multi-resolution fusion · Convolutional decoder<br>**필요성:** 이미지 단위 표현에서 픽셀별 깊이·범주 출력으로의 전환, 문맥과 공간 위치를 함께 보존하는 decoder의 역할<br>**DPT 동작:** backbone의 여러 층에서 얻은 token → 공간 feature 재배열·해상도 변환 → convolutional decoder의 점진적 fusion → 픽셀별 출력<br>**학습과 출력:** 깊이 추정·semantic segmentation의 target·출력 채널·loss 차이, backbone과 task별 head의 연결<br>**Backbone과 비교:** vanilla ViT의 중간 층이 처음부터 해상도 pyramid인 것은 아니라는 점, Swin의 계층적 feature와 DPT의 해상도 재구성·복원 경로의 차이 |
+| Dense Prediction / DPT | 모델 | 필수 | **포함 개념:** Dense prediction · Depth / Semantic segmentation · ViT / Hybrid backbone · Intermediate tokens · Reassemble · Spatial feature map · Multi-resolution fusion · Convolution / Upsampling · Convolutional decoder<br>**필요성과 출력:** 이미지 단위 표현을 픽셀별 깊이·범주 출력으로 바꾸는 문제. Token의 공간 대응과 전역 문맥을 유지하며 출력 해상도를 복원하는 decoder의 역할을 설명<br>**필요한 공간 연산:** Feature map의 채널·공간 축, 1×1/3×3 convolution·보간/upsampling·feature fusion을 DPT의 shape를 읽을 정도로 보충하고 각각 입력·출력 해상도와 정보 결합 역할을 확인<br>**DPT 전체 흐름:** Backbone 여러 층의 token → reassemble·해상도 변환 → 여러 해상도의 spatial feature → convolutional decoder의 점진적 fusion → 픽셀별 출력을 추적<br>**학습과 구조 비교:** 깊이·semantic segmentation의 target·출력 채널·loss를 비교. Vanilla ViT의 중간 층이 처음부터 해상도 pyramid인 것은 아니라는 점과 Swin의 계층적 feature·DPT의 해상도 재구성 차이를 구분<br>**학습 범위:** Token에서 공간 출력으로 이어지는 공통 head 구조를 중심으로 다룸. Depth Anything·DUSt3R·VGGT 등은 DPT 계열 head의 활용 사례로 연결하고 각 전체 모델은 Related Work로 확장 |
 
 <!-- study-references:10 -->
 
@@ -231,11 +231,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 11회차 · 날짜 미정 · 발표자: 미정 · SAM 계열: 분할·추적·3D 복원
+##### 11회차 · 날짜 미정 · 발표자: 미정 · SAM 계열: 프롬프트 분할·추적과 3D 확장
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| SAM Family | 모델 · 생성 모델 | 중요 | **포함 개념:** SAM · Image / Prompt encoder · Point / Box / Mask prompt · Learned mask / Output tokens · Two-way mask decoder / Cross-attention · Multiple masks / Quality prediction · Image embedding reuse · Prompt sampling / Mask loss · Data engine · SAM 2 / Memory encoder / Memory bank / Memory attention · SAM 3 / Concept prompts / Detector–Tracker / Presence head · SAM 3.1 / Object Multiplex · SAM 3D Objects / Geometry–Texture stages / Generative prior · SAM 3D Body / Keypoint–Mask prompts / MHR / Human mesh recovery<br>**필요성과 출력:** 점·박스로 지정한 대상의 mask, 시간에 따라 유지할 대상 mask·ID, 개념에 해당하는 모든 instance, 단일 이미지에서 복원한 3D 객체·인체를 구분. 계열별 입력·조건·출력·학습 target을 한 표로 비교<br>**원 SAM 구조·학습:** image encoder·prompt encoder·two-way mask decoder의 입력·shape·attention 방향을 추적. prompt sampling·mask loss, 모호한 prompt의 복수 mask·품질 예측, image embedding 재사용과 데이터 수집·모델 학습의 연결<br>**Prompt·output token과 Q:** 점·박스에서 얻는 prompt token, mask 출력을 위한 learned output token, attention에서 계산하는 Q를 구분. prompt의 지시 정보와 output token의 mask 예측 역할을 DETR의 출력 slot·BLIP-2의 정보 추출 query와 연결<br>**SAM 2 · 시간 정보:** 프레임 특징 → memory attention → mask 예측 → memory encoder·bank 갱신의 흐름. 과거 대상 정보와 현재 prompt의 역할, 가림·재등장·추가 prompt에 따른 동작을 비교<br>**SAM 3 · 개념 지정:** 짧은 텍스트·이미지 exemplar에 일치하는 모든 객체를 찾는 문제와 공간적 prompt를 비교. 공유 backbone·image detector·memory tracker·presence head의 역할, mask·ID와 존재 여부 판단을 설명<br>**SAM 3.1 · 여러 객체 처리:** Object Multiplex의 공유 memory와 공동 추적으로 여러 객체를 처리하는 구조를 비교. 객체별 반복 계산과 메모리 비용을 줄이는 지점을 공식 자료에서 확인<br>**SAM 3D Objects · 생성적 복원:** 이미지·대상 mask를 조건으로 coarse geometry·layout을 만들고 texture·detail을 복원하는 단계, mesh·Gaussian splat 출력의 의미를 설명. 관측으로 확인되는 영역과 학습 prior로 채우는 영역을 구분<br>**SAM 3D Body · 인체 표현:** 이미지와 선택적 2D keypoint·mask prompt → encoder–decoder → MHR 기반 인체 pose·mesh의 흐름. 일반 객체 생성과 인체의 skeleton·surface shape 추정, 출력·데이터·평가 차이를 비교<br>**학습 깊이와 연결:** 원 SAM의 구조·학습·추론을 자세히 다루고, 후속 계열은 위에 명시한 새 문제·구조·정보 흐름을 모두 비교. 3D 계열의 세부 생성 loss·flow·latent 구조는 3장 학습 후 다시 연결하며, 계열별 전체 구현 재현은 확장 학습으로 연결 |
+| SAM Family | 모델 · 생성 모델 | 중요 | **포함 개념:** SAM · Image / Prompt encoder · Point / Box / Mask prompt · Learned mask / Output tokens · Two-way mask decoder / Cross-attention · Multiple masks / Quality prediction · Image embedding reuse · Prompt sampling / Mask loss · Data engine · SAM 2 / Memory encoder / Memory bank / Memory attention · SAM 3 / Concept prompts / Detector–Tracker / Presence head · SAM 3.1 / Object Multiplex · SAM 3D Objects / Generative prior · SAM 3D Body / MHR / Human mesh recovery<br>**문제와 출력:** 점·박스가 지정한 대상 mask, 비디오에서 유지할 mask·ID, 개념에 해당하는 모든 instance, 단일 이미지의 3D 객체·인체를 구분. 계열별 입력·조건·출력을 한 표로 비교<br>**원 SAM 중심 학습:** Image encoder·prompt encoder·two-way mask decoder → 여러 mask·품질 예측의 정보 흐름·shape를 추적. Prompt sampling·mask loss·image embedding 재사용과 data engine의 역할을 확인<br>**Token과 query:** 입력 prompt token·learned mask/output token·attention의 Q를 구분. DETR의 출력 slot, DPT의 픽셀별 출력과 연결해 prompt가 가리키는 대상의 mask를 만드는 과정을 설명<br>**SAM 2의 시간 확장:** 현재 frame feature → memory attention → mask → memory encoder·bank 갱신의 핵심 흐름. 과거 대상 정보·현재 prompt와 가림·재등장의 관계를 원 SAM과 비교<br>**SAM 3·3.1 비교:** SAM 3의 text/image exemplar 기반 concept prompt·detector–tracker·presence 판단, SAM 3.1의 Object Multiplex 공유 memory·여러 객체 공동 처리를 새 입력·출력·정보 흐름 중심으로 비교<br>**SAM 3D 비교:** Objects의 이미지·대상 mask → geometry/layout → texture/detail과 mesh/Gaussian splat 출력, Body의 이미지·선택적 keypoint/mask → MHR 기반 pose·human mesh를 비교. 관측과 generative prior로 채우는 영역을 구분<br>**학습 깊이:** 원 SAM을 자세히 다루고 SAM 2의 memory를 주요 확장으로 설명. 나머지 계열은 문제·구조 변화 비교로 모두 다루며, 3D의 생성 loss·flow·latent 세부 원리는 3장 학습 후 다시 연결 |
 
 <!-- study-references:11 -->
 
@@ -248,17 +248,24 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 12회차 · 날짜 미정 · 발표자: 미정 · VLM과 visual token
+##### 12회차 · 날짜 미정 · 발표자: 미정 · Multimodal LLMs: 이미지 표현과 언어 모델 연결
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| VLM / Visual Tokens | 모델 | 중요 | **포함 개념:** LLaVA · Vision encoder / Projector / LLM · Visual tokens / Image–Text token sequence · Feature alignment / Instruction tuning · Frozen / Trainable parameters · Next-token loss / Autoregressive response generation · BLIP-2 / Q-Former · Learned query tokens / Cross-attention · Query-based visual information extraction<br>**필요성:** 이미지 표현과 언어 모델의 token 표현 연결, 시각 정보가 질문의 문맥과 응답에 반영되는 경로<br>**원 LLaVA 구조:** 사전학습 vision encoder → linear projector → visual token, text token과 함께 LLM에 입력되는 위치·shape와 응답 생성<br>**LLaVA 두 단계 학습:** feature alignment에서 projector 학습, instruction tuning에서 projector·LLM 학습. 두 단계 모두 vision encoder 고정, 단계별 데이터·target·gradient 경로 비교<br>**BLIP-2 비교:** 고정 vision encoder → 학습 가능한 query를 사용하는 Q-Former → projection → 고정 LLM의 흐름. query가 image feature를 cross-attention으로 읽어 고정 개수의 visual token을 만드는 방식과 LLaVA의 projector를 비교<br>**학습과 query의 역할:** BLIP-2의 이미지–언어 표현 학습과 언어 생성 연결의 두 단계, 모듈별 고정·갱신 범위를 확인. query token은 정보를 추출하는 학습 표현이고 attention의 Q는 그 표현 등에서 계산되는 조회 벡터라는 점을 구분. 원 LLaVA와 모듈·학습 target·고정 범위가 함께 달라짐을 설명<br>**학습과 생성:** 정답 응답 위치의 next-token loss, 학습 시 제공되는 응답과 생성 시 이전 token을 이용하는 흐름의 차이<br>**2장과 연결:** CLIP의 이미지–텍스트 표현 정렬과 VLM의 응답 생성 목적 구분, 사전학습·전이·fine-tuning의 원리와 근거. BLIP-2 비교는 Q-Former의 정보 추출·학습 단계에 집중하고 모든 학습 loss의 상세 유도는 확장 학습으로 연결 |
+| Multimodal LLMs / Visual Tokens | 모델 | 중요 | **포함 개념:** LLaVA / LLaVA-1.5 · Pretrained vision encoder / Projector / LLM · Continuous visual tokens / Image–Text sequence · Feature alignment / Instruction tuning · Frozen / Trainable parameters · Next-token loss / Response generation · BLIP-2 / Q-Former · Learned query tokens / Cross-attention · Flamingo / Gated cross-attention · Qwen2-VL / Dynamic resolution / M-RoPE<br>**선수 개념과 문제:** 사전학습 encoder·LLM을 재사용하고, frozen/fine-tuning의 고정·갱신 파라미터를 먼저 설명. CLIP은 이미지·텍스트 표현을 정렬한 encoder의 예로 소개하고 대조 학습 loss는 14회차에서 다룸. 여기서는 이미지를 근거로 언어 응답을 생성하는 연결 구조에 집중<br>**LLaVA 전체 흐름:** Vision encoder → projector → visual token을 text token과 함께 decoder-only LLM에 입력 → 응답 생성. 원 LLaVA의 linear projector와 LLaVA-1.5의 MLP projector를 구분하고 token 수·차원·입력 위치를 추적<br>**LLaVA 학습·생성:** 원 LLaVA의 feature alignment는 projector, instruction tuning은 projector·LLM을 학습하며 vision encoder는 고정. 단계별 데이터·응답 target·loss mask·gradient 경로와 생성 시 이전 token을 사용하는 흐름을 확인<br>**BLIP-2 주요 비교:** 고정 vision encoder → learned query가 image feature를 cross-attention으로 읽는 Q-Former → projection → 고정 LLM. 고정 개수 visual token·정보 추출 방식과 두 단계 학습의 목적·고정 범위를 LLaVA와 비교<br>**대표 확장 비교:** Flamingo는 resampler·LM 내부 gated cross-attention의 결합 위치, Qwen2-VL은 해상도에 따른 visual token 수와 M-RoPE의 공간·시간 위치 표현까지만 비교. 모델별 전체 학습 과정은 Related Work로 확장<br>**Token의 뜻과 학습 범위:** Visual token은 이 모델들에서 연속 feature 벡터이며 21회차 VQ code index와 구분. LLaVA를 중심으로 BLIP-2를 주요 비교 대상으로 삼고, learned query와 계산된 Q·token 수·결합 위치·학습 목표·고정 범위를 같은 기준으로 정리 |
 
 <!-- study-references:12 -->
 
 - [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485)
 - [Improved Baselines with Visual Instruction Tuning](https://arxiv.org/abs/2310.03744)
 - [BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models](https://arxiv.org/abs/2301.12597)
+- [Flamingo: a Visual Language Model for Few-Shot Learning](https://arxiv.org/abs/2204.14198)
+- [Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution](https://arxiv.org/abs/2409.12191)
+- [Qwen3-VL Technical Report](https://arxiv.org/abs/2511.21631)
+- [InternVL3.5: Advancing Open-Source Multimodal Models in Versatility, Reasoning, and Efficiency](https://arxiv.org/abs/2508.18265)
+- [PaliGemma: A versatile 3B VLM for transfer](https://arxiv.org/abs/2407.07726)
+- [DeepSeek-VL2: Mixture-of-Experts Vision-Language Models for Advanced Multimodal Understanding](https://arxiv.org/abs/2412.10302)
+- [Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
 
 <!-- /study-references -->
 
@@ -358,7 +365,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 #### 학습 목표
 
-생성 모델의 확률적 목표와 연속·이산 잠재 표현, noise·score·velocity의 학습 신호를 설명한다. 네트워크·조건 입력·sampling의 역할을 구분하고, 구조와 생성 절차에 따른 품질·다양성·계산 비용을 해석한다.
+생성 모델의 확률적 목표와 연속·이산 잠재 표현을 익힌 뒤, DDPM·score·sampling·flow의 학습 신호와 생성 갱신을 먼저 설명한다. 이를 압축 공간의 조건부 생성·Transformer·비디오·조건 제어에 차례로 적용하고, 네트워크·학습 목표·조건·guidance·sampler의 역할과 품질·다양성·시간 일관성·계산 비용을 구분한다.
 
 #### 학습 내용
 
@@ -405,13 +412,13 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-#### 3-B. Diffusion & Flow
+#### 3-B. Diffusion & Flow Foundations
 
-##### 22회차 · 날짜 미정 · 발표자: 미정 · DDPM의 학습과 생성
+##### 22회차 · 날짜 미정 · 발표자: 미정 · DDPM: 노이즈 예측 학습과 반복 생성
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| DDPM | 생성 모델 | 필수 | **포함 개념:** Forward noising · Noise schedule · Closed-form noisy sample · ε-prediction · Denoising loss · Timestep embedding · U-Net · Reverse sampling<br>**Forward와 target:** 이미지에 Gaussian noise를 더하는 과정, noise schedule과 임의 timestep의 noisy sample을 바로 만드는 식, 정답 noise 생성<br>**구조와 학습:** noisy 입력·timestep embedding → U-Net → ε 예측, 학습에서 사용하는 이미지·noise·timestep과 denoising loss<br>**Reverse sampling:** 예측 noise로 역방향 평균을 계산하는 과정, 분산·추가 noise의 역할과 반복 갱신<br>**학습과 생성:** 정답 이미지에서 학습용 입력을 만드는 과정과 noise에서 이미지를 생성하는 과정, 학습 target·추론 시 이용 가능한 정보 구분 |
+| DDPM | 생성 모델 | 필수 | **포함 개념:** Forward noising · Noise schedule · Closed-form noisy sample · ε-prediction · Denoising MSE · Timestep embedding · U-Net / Skip connection · Reverse mean / Variance · Iterative sampling<br>**핵심 문제:** 순수 noise에서 이미지를 한 번에 만드는 대신, 여러 noise 수준에서 복원 방향을 학습해 반복 갱신하는 전체 과정을 설명<br>**학습 데이터와 target:** 정답 이미지 x_0·Gaussian noise ε·timestep t를 뽑아 x_t를 직접 만드는 식과 noise schedule을 확인. 매번 forward noising 전 단계를 실행할 필요가 없는 이유, network 입력·정답 noise·MSE를 연결<br>**Denoiser와 학습:** Noisy image·timestep embedding → U-Net → ε 예측의 shape와 gradient 경로를 추적. 해상도 축소·복원·skip connection은 network를 읽을 정도로 설명하고, ε 예측 목표를 먼저 완성<br>**생성 전체 흐름:** Gaussian 초기 noise → ε 예측 → 역방향 평균 계산 → 단계별 분산·추가 noise → 다음 sample을 끝까지 연결. 한 번의 학습 step과 한 번의 reverse update를 작은 예제로 계산<br>**학습 범위:** 22회차 안에서 학습과 noise-to-image 생성을 모두 완성. 학습 때만 쓰는 정답 이미지·noise와 생성 때 이용 가능한 입력을 구분하고, ELBO는 denoising 목표와의 관계까지 연결. 다른 출력 parameterization은 24회차에서 비교 |
 
 <!-- study-references:22 -->
 
@@ -419,11 +426,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 23회차 · 날짜 미정 · 발표자: 미정 · Score-based modeling과 연속 시간
+##### 23회차 · 날짜 미정 · 발표자: 미정 · Score-based Modeling: score와 연속 시간 생성
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Score-Based Modeling | 생성 모델 | 필수 | **포함 개념:** Score · Denoising score matching · Noise-conditioned network · Score–ε relationship · Reverse-time SDE · Probability-flow ODE<br>**Score의 의미:** 입력에 대한 log-density의 gradient, noise 수준에 따라 달라지는 데이터 분포와 score 방향<br>**학습 신호:** Gaussian perturbation의 conditional score를 이용한 denoising score matching, noise-conditioned network와 ε 예측의 관계<br>**연속 시간 관점:** forward·reverse-time SDE의 시간 방향·drift·noise 항, 역과정에서 학습한 score를 사용하는 위치<br>**Probability-flow ODE:** 정확한 score를 가정할 때 SDE와 같은 시간별 분포를 따르는 결정적 과정, 분포와 개별 궤적의 차이<br>**이해 범위:** 각 식의 항·noise 유무·학습 신호와 생성 과정의 연결, 다음 Sampling에서 작은 예제의 갱신 계산 |
+| Score-Based Modeling | 생성 모델 | 필수 | **포함 개념:** Score / Input log-density gradient · Denoising score matching · Noise-conditioned network · Score–ε relationship · Continuous time · Drift / Diffusion · Reverse-time SDE · Probability-flow ODE<br>**Score의 직관:** 주어진 noise 수준의 분포에서 입력을 어느 방향으로 움직이면 log-density가 증가하는지 나타내는 벡터. 입력에 대한 gradient와 network 파라미터 gradient를 구분<br>**학습 신호 연결:** Gaussian perturbation의 conditional score로 학습하는 denoising score matching과 DDPM의 ε 예측 사이의 noise scale·부호 관계를 확인<br>**SDE로 확장:** 이산 noising을 연속 시간의 drift·확률적 noise로 연결. Forward·reverse 시간 방향과 reverse-time SDE에서 학습한 score가 들어가는 항을 설명<br>**Probability-flow ODE:** 정확한 score를 가정하면 같은 시간별 marginal 분포를 따르는 결정적 ODE를 비교. 같은 분포와 같은 개별 궤적은 다르며 실제 모델 오차·수치 적분 오차도 구분<br>**학습 범위:** 식의 각 항·noise 유무·ε와 score의 연결을 읽는 데 집중. SDE 전체 이론·역시간 정리 증명은 확장 학습으로 두고, 다음 회차에서 실제 갱신을 계산 |
 
 <!-- study-references:23 -->
 
@@ -432,55 +439,29 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 24회차 · 날짜 미정 · 발표자: 미정 · Diffusion sampling과 수치 적분
+##### 24회차 · 날짜 미정 · 발표자: 미정 · Diffusion Sampling: 생성 갱신과 계산 비용
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Diffusion Sampling | 생성 방법 | 필수 | **포함 개념:** DDIM · η · Timestep subsampling · Deterministic / Stochastic updates · Euler / Heun · Discretization error · NFE<br>**학습과 sampling:** 학습한 denoiser를 활용하며 생성 갱신식을 바꾸는 DDIM, timestep 부분집합과 학습 noise schedule의 구분<br>**DDIM 갱신:** 현재 noisy sample → 원본 추정 → 다음 sample, η에 따른 추가 noise와 같은 초기 noise에서의 결정성<br>**ODE 계산:** Euler의 한 번 갱신과 Heun의 기울기 재평가·보정, 작은 예제로 이동 방향·다음 상태 비교<br>**비용과 오차:** 단계 크기·이산화 오차·품질의 관계, step 수와 network function evaluations(NFE)의 차이<br>**비교 조건:** 같은 모델·초기 noise·조건·호출 예산에서 sampler·시간 격자 비교, 이후 Flow Matching·Rectified Flow의 ODE sampling과 연결 |
+| Diffusion Sampling | 생성 방법 | 필수 | **포함 개념:** DDPM / DDIM updates · η · Timestep subsampling · ε / x_0 / v parameterization · Deterministic / Stochastic sampling · Euler / Heun · Discretization error · Steps / NFE · DPM-Solver<br>**학습 목표와 sampler:** Network가 예측하는 값·학습 loss와, 그 예측으로 다음 상태를 계산하는 sampler를 구분. DDPM reverse update를 기준으로 DDIM의 원본 추정·다음 sample 계산을 비교<br>**출력 parameterization:** 같은 noisy sample의 signal/noise 계수로 ε·x_0·v를 정의하고 출력 사이의 변환을 확인. v-parameterization과 25회차의 경로 미분인 flow velocity를 구분하며, 변환 가능성이 loss 가중치·학습 결과의 동일성을 뜻하지 않음을 설명<br>**DDIM과 시간 격자:** Timestep 부분집합과 학습 noise schedule의 차이, η에 따른 추가 noise·결정성을 확인. 같은 초기 noise에서 두세 번의 update를 비교<br>**ODE 계산:** Euler 한 번 갱신 → Heun의 방향 재평가·보정을 작은 예제로 계산. EDM의 sampler 설계와 DPM-Solver의 diffusion 전용 solver는 이 기본 원리 위의 확장으로 연결<br>**비용과 비교:** Step 수·network function evaluations(NFE)·단계 크기·이산화 오차를 구분. 같은 모델·조건·초기 noise·호출 예산에서 비교하고, distillation처럼 재학습하는 방법과 sampler만 바꾸는 방법의 차이를 확인<br>**학습 범위:** DDIM·Euler·Heun의 갱신과 비용 비교를 중심으로 다룸. 고차 solver 전체 유도·distillation 학습은 Related Work로 확장하고 Flow Matching의 ODE sampling으로 연결 |
 
 <!-- study-references:24 -->
 
 - [Denoising Diffusion Implicit Models](https://arxiv.org/abs/2010.02502)
 - [Elucidating the Design Space of Diffusion-Based Generative Models](https://arxiv.org/abs/2206.00364)
+- [Progressive Distillation for Fast Sampling of Diffusion Models](https://arxiv.org/abs/2202.00512)
+- [DPM-Solver: A Fast ODE Solver for Diffusion Probabilistic Model Sampling in Around 10 Steps](https://arxiv.org/abs/2206.00927)
 
 <!-- /study-references -->
 
-##### 25회차 · 날짜 미정 · 발표자: 미정 · 조건·guidance와 Latent Diffusion
+##### 25회차 · 날짜 미정 · 발표자: 미정 · Flow Matching·Rectified Flow: 경로와 속도장 학습
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| Conditioning & Guidance | 구성 요소 · 생성 방법 | 필수 | **포함 개념:** Class / Text conditioning · Cross-attention · Feature modulation / FiLM · AdaLN · Condition dropout · Classifier-free guidance<br>**조건 입력:** class·text 표현을 생성 네트워크에 전달하는 위치, noisy 입력·시간 정보·조건 정보의 역할 구분<br>**Cross-attention:** 이미지 feature에서 Q, 조건 token에서 K·V를 만드는 정보 결합과 tensor shape, 1장의 attention 원리 적용<br>**Feature modulation:** 조건으로 만든 scale·shift를 feature에 적용하는 FiLM, normalization 뒤의 조건별 affine 변환인 AdaLN과 연산 위치 비교<br>**CFG 학습·추론:** condition dropout으로 조건부·무조건부 예측을 학습, 두 예측을 guidance scale로 조합하는 갱신 신호<br>**효과와 비용:** 조건 반영 강도·다양성·과도한 guidance의 영향, 조건부·무조건부 평가의 계산 비용과 뒤 모델들의 적용 위치 |
-| Latent Diffusion | 생성 모델 | 필수 | **포함 개념:** Autoencoder · Latent compression · Autoencoder regularization · Frozen encoder / Decoder · Latent denoising · Text conditioning<br>**압축 단계:** 먼저 학습한 autoencoder의 이미지 → latent → 복원, 압축률·복원 품질과 KL·VQ regularization의 차이<br>**생성 학습:** 고정한 autoencoder로 latent를 만들고 denoiser 학습, pixel 공간과 latent 공간의 입력·target·계산 비용 비교<br>**조건과 추론:** text encoder·cross-attention·CFG의 적용 위치, noise latent → 반복 denoising → image decoder의 전체 흐름<br>**표현의 한계:** autoencoder의 복원 손실과 생성 단계의 오차 구분, 연속·이산 latent와 prior를 3-A의 VAE·VQ 계열에 연결 |
+| Flow Matching | 생성 방법 | 필수 | **포함 개념:** Probability path · Conditional path · Velocity field · Conditional flow matching · Velocity regression · ODE sampling · Time convention<br>**핵심 직관:** Noise 분포를 data 분포로 옮기는 경로를 정하고, 각 위치·시간에서 이동할 velocity를 학습. DDPM의 noise·score 예측과 학습 target·생성 갱신을 비교<br>**입력과 target:** Noise/data pair와 시간에서 conditional path의 위치·velocity target을 만들고 회귀 loss로 학습. 개별 pair의 조건부 경로와 전체 분포를 옮기는 field를 구분<br>**학습과 생성:** 학습용 위치·정답 velocity는 pair로 직접 계산하고, 생성은 초기 noise에서 학습한 field를 평가하며 ODE 적분. 여기서는 t=0 noise·t=1 data로 두고 앞 diffusion의 시간 방향과 비교<br>**연결 범위:** 24회차의 Euler·Heun을 같은 생성 갱신 원리로 적용. 경로 선택·학습 목표·network 구조·sampler가 서로 다른 설계 요소임을 확인하고, 일반 Flow Matching의 전체 이론은 확장 학습으로 연결 |
+| Rectified Flow | 생성 방법 | 필수 | **포함 개념:** Coupling · Straight interpolation · Endpoint-difference target · Rectification / Reflow · Trajectory straightness · Few-step sampling<br>**직선 보간 예제:** Pair를 맺는 coupling을 정하고 noise·data의 직선 보간 위치와 두 끝점 차이인 velocity target을 계산. Flow Matching과 공통인 velocity 회귀·ODE sampling을 확인<br>**학습 경로와 생성 궤적:** 각 pair의 직선 학습 경로와 학습한 field의 실제 적분 궤적을 구분. 직선 target만으로 모든 생성 궤적·한 step 생성의 정확도가 보장되지는 않음을 설명<br>**Rectification과 reflow:** 학습한 ODE로 얻은 시작·끝 pair로 새 coupling을 만들고 다시 학습하는 흐름. 첫 학습과 reflow를 구분하고 궤적 직선성·이산화 오차·호출 수의 관계를 해석<br>**학습 깊이와 응용:** 직선 보간 target·한 번의 velocity 회귀·ODE 생성 흐름을 중심으로 다루고 reflow는 절차·효과를 비교. 다음 Latent Diffusion·MMDiT에서 표현 공간·조건·학습 목표를 분리해 연결 |
 
 <!-- study-references:25 -->
-
-- [Classifier-Free Diffusion Guidance](https://arxiv.org/abs/2207.12598)
-- [FiLM: Visual Reasoning with a General Conditioning Layer](https://arxiv.org/abs/1709.07871)
-- [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752)
-- [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748)
-
-<!-- /study-references -->
-
-##### 26회차 · 날짜 미정 · 발표자: 미정 · ControlNet과 공간 조건 제어
-
-| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
-|---|---|---|---|
-| ControlNet | 모델 · 조건 제어 | 중요 | **포함 개념:** Spatial conditions · Frozen backbone · Trainable branch · Zero convolution · Multi-scale residual injection<br>**공간 조건:** edge·depth·pose 등의 공간 배치와 text 조건의 차이, 조건 image가 추가 branch에 들어가는 경로<br>**구조와 연결:** 사전학습 backbone 고정·trainable branch 구성, 여러 해상도에서 조건 residual을 추가하는 위치·shape<br>**초기화와 학습:** zero-initialized convolution의 초기 출력, 원 모델의 출력을 유지하며 조건 신호를 추가하는 과정과 gradient 흐름<br>**추론과 근거:** 조건 입력·강도가 결과에 미치는 영향, 고정·학습 파라미터와 구조 ablation을 2장의 전이·조정 원리와 연결 |
-
-<!-- study-references:26 -->
-
-- [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543)
-
-<!-- /study-references -->
-
-##### 27회차 · 날짜 미정 · 발표자: 미정 · Flow Matching과 Rectified Flow
-
-| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
-|---|---|---|---|
-| Flow Matching | 생성 방법 | 필수 | **포함 개념:** Probability path · Conditional path · Velocity field · Velocity regression · ODE sampling<br>**분포의 이동:** noise 분포와 data 분포를 잇는 probability path, 시간별 sample을 이동시키는 velocity field의 역할<br>**학습 target:** conditional path에서 시간별 위치·velocity target 생성, network가 예측한 velocity와의 회귀 loss<br>**생성 과정:** 초기 noise → 학습한 field 평가 → ODE 적분 → sample, 학습용 conditional path와 실제 생성 궤적의 구분<br>**비교와 연결:** DDPM의 ε·score와 다른 예측 대상, 경로·시간 방향·sampler의 역할, 다음 Rectified Flow의 직선 보간 목표와 비교 |
-| Rectified Flow | 생성 방법 | 필수 | **포함 개념:** Coupling · Straight interpolation · Velocity target · Rectification / Reflow · Trajectory straightness<br>**Pair와 target:** 두 분포의 sample을 연결하는 coupling, 직선 보간 위의 입력과 두 끝점 차이로 만드는 velocity target<br>**학습과 궤적:** velocity 회귀와 학습한 field의 ODE 적분, 학습에 사용한 직선 보간과 생성 궤적이 달라지는 이유<br>**Rectification과 reflow:** 적분으로 얻은 끝점 pair로 새 coupling을 만들고 다시 학습하는 과정, 초기 pair와 생성 pair의 출처 구분<br>**속도와 정확도:** 궤적의 직선성·이산화 오차·sampling 단계 수의 관계, 적은 단계에서의 품질을 실제로 비교<br>**Flow Matching과 비교:** 공통인 velocity 학습과 ODE sampling을 바탕으로, coupling·직선 보간·reflow의 역할을 구분 |
-
-<!-- study-references:27 -->
 
 - [Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747)
 - [Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003)
@@ -488,15 +469,69 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- /study-references -->
 
-##### 28회차 · 날짜 미정 · 발표자: 미정 · DiT·MMDiT의 생성 구조
+#### 3-C. Conditional Image & Video Generation
+
+##### 26회차 · 날짜 미정 · 발표자: 미정 · Latent Diffusion: 압축 공간의 조건부 생성
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
-| DiT / MMDiT | 모델 | 필수 | **포함 개념:** Latent patch tokens · Timestep / Condition embeddings · AdaLN-Zero · DiT output head · Image / Text streams · Modality-specific weights · Joint attention<br>**원 DiT 구조:** latent → patch token → Transformer blocks → 출력 복원, timestep·class embedding과 단계별 shape<br>**조건과 출력:** AdaLN-Zero의 scale·shift·gate와 초기화, ε·역방향 분산을 예측하는 원 DiT output head와 학습 목표<br>**MMDiT 구조:** 이미지·텍스트별 가중치와 token stream, Q·K·V를 결합하는 joint attention 뒤 각 stream으로 정보를 나누는 흐름<br>**학습 목표 비교:** 원 DiT의 diffusion 학습과 MMDiT의 rectified-flow 적용, 생성 네트워크 구조·예측 target·sampling 방법의 구분<br>**설계 근거:** U-Net·DiT·MMDiT의 정보 결합, patch 크기·모델 규모·계산량과 성능, 앞서 배운 latent·조건·flow 원리로 전체 구조 설명 |
+| Latent Diffusion | 생성 모델 | 필수 | **포함 개념:** Autoencoder · Latent compression · KL / VQ regularization · Frozen encoder / Decoder · Latent denoising · Text encoder · Noise latent / Image decoding<br>**왜 latent인가:** 픽셀 공간 대신 압축된 공간에서 반복 생성해 계산 비용을 줄이는 구조. 19·21회차의 autoencoder·연속/이산 표현과 연결하고 압축률·복원 품질의 균형을 확인<br>**학습의 두 단계:** 먼저 autoencoder의 이미지 → latent → 복원을 학습한 뒤 encoder·decoder를 고정하고 latent denoiser를 학습. KL/VQ regularization과 생성 network의 예측 target·loss를 구분<br>**전체 생성 흐름:** Text → text encoder, noise latent → 조건부 반복 갱신 → image decoder의 정보 흐름·shape·고정/학습 파라미터를 추적. Pixel-space DDPM과 바뀐 공간·유지되는 원리를 비교<br>**오차와 학습 범위:** Autoencoder 복원 한계와 생성 단계 오차를 구분. 원 LDM의 latent diffusion을 중심으로 설명하고, latent 공간 자체가 ε/score/flow 중 특정 학습 목표를 강제하는 것은 아니라는 점을 다음 MMDiT와 연결 |
+| Conditioning & Guidance | 구성 요소 · 생성 방법 | 필수 | **포함 개념:** Class / Text conditioning · Cross-attention · FiLM / Feature modulation · AdaLN · Classifier guidance · Condition dropout · Classifier-free guidance / CFG · Guidance scale<br>**조건을 넣는 방식:** Noisy 상태·timestep·class/text 조건의 역할과 입력 위치를 구분. 이미지 feature의 Q와 text feature의 K·V를 결합하는 cross-attention을 1장에 연결<br>**Feature modulation:** 조건에서 만든 scale·shift를 적용하는 FiLM과 normalization 이후 조건별 affine 변환인 AdaLN의 적용 위치를 비교. AdaLN-Zero의 gate·초기화는 27회차에서 다룸<br>**Guidance의 원리:** Classifier guidance의 분류기 gradient는 score의 적용 사례로 짧게 비교. CFG는 condition dropout으로 조건부·무조건부 예측을 학습하고, 추론에서 두 예측을 guidance scale로 조합하는 흐름을 확인<br>**효과와 구분:** 조건 충실도·다양성·과도한 guidance의 영향과 두 예측의 호출 비용을 비교. 조건 입력 구조와 sampling 예측을 조절하는 guidance를 구분하고, ControlNet 같은 추가 조건 모듈은 29회차에서 연결 |
 
-<!-- study-references:28 -->
+<!-- study-references:26 -->
+
+- [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752)
+- [Diffusion Models Beat GANs on Image Synthesis](https://arxiv.org/abs/2105.05233)
+- [Classifier-Free Diffusion Guidance](https://arxiv.org/abs/2207.12598)
+- [FiLM: Visual Reasoning with a General Conditioning Layer](https://arxiv.org/abs/1709.07871)
+
+<!-- /study-references -->
+
+##### 27회차 · 날짜 미정 · 발표자: 미정 · Diffusion Transformers: DiT·MMDiT
+
+| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
+|---|---|---|---|
+| DiT / MMDiT | 모델 · Denoiser | 필수 | **포함 개념:** Latent patch tokens · Timestep / Condition embeddings · AdaLN-Zero / Scale / Shift / Gate · DiT output head · Image / Text streams · Modality-specific weights · Joint attention · Diffusion / Rectified-flow targets<br>**구조의 변화:** 26회차의 압축 공간·조건부 생성에 1장의 Transformer를 적용. Latent → patch token → Transformer blocks → 공간 출력의 shape를 추적하고 U-Net의 해상도·skip 경로와 비교<br>**원 DiT:** Timestep·class embedding을 AdaLN-Zero의 scale·shift·gate로 전달하는 위치·초기화, ε·역방향 분산을 예측하는 output head와 원 diffusion 학습 목표를 확인<br>**MMDiT:** 이미지·텍스트별 가중치와 token stream → Q·K·V 결합의 joint attention → 각 stream 갱신의 흐름. LDM에서 이미지 query가 text feature를 읽는 cross-attention과 정보 교환 위치·방향을 비교<br>**구조와 목표:** DiT라는 network 구조와 ε/velocity 학습 target·sampling 방법을 분리. 원 DiT의 diffusion과 MMDiT의 rectified-flow 적용을 22–26회차 원리로 각각 설명<br>**학습 범위:** DiT 전체 흐름과 MMDiT의 결합 구조·목표 변화에 집중. Patch 크기·모델 규모·계산량의 ablation을 확인하고, 각 모델의 전체 재현은 확장 학습으로 두고, 비디오의 시간축 확장은 다음 회차로 연결 |
+
+<!-- study-references:27 -->
 
 - [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748)
 - [Scaling Rectified Flow Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2403.03206)
+
+<!-- /study-references -->
+
+##### 28회차 · 날짜 미정 · 발표자: 미정 · Video Generation: 시간축과 시공간 모델링
+
+| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
+|---|---|---|---|
+| Video Diffusion / Flow Models | 생성 모델 · 모델 구조 | 중요 | **포함 개념:** Video tensor / Frame axis · Spatial / Temporal attention · Temporal position · Motion module · Video latent / Spatiotemporal compression · Video patch tokens · Text-to-video / Image-to-video · Temporal consistency<br>**이미지에서 비디오로:** 이미지 batch와 여러 frame으로 된 clip을 구분하고 시간 축이 추가된 입력·noise·예측 target의 shape를 확인. Frame을 독립 생성할 때 정체성·외관·움직임이 일관되지 않는 문제를 설명<br>**시간 정보 결합:** Video Diffusion Models의 spatial/temporal attention을 기본 예제로 따라가고 frame 간 정보 전달·시간 위치 표현의 필요성을 확인. 작은 clip 예제로 spatial·temporal attention의 연산 축과 token 수를 추적<br>**이미지 모델의 확장:** AnimateDiff의 motion module과 고정 이미지 backbone의 정보 흐름을 주요 비교로 다룸. Stable Video Diffusion은 latent video·image conditioning의 사례로 연결하고 spatial/temporal 계산·고정/학습 범위를 비교<br>**Video Transformer로 연결:** CogVideoX의 시공간 압축 latent·video token·text 결합을 27회차와 비교. Wan은 추가 대표 사례로 연결하며 network 구조와 diffusion/flow 학습 target을 모델별로 구분<br>**조건과 비용:** Text-to-video·image-to-video의 조건 frame·text·noisy clip 입력 차이, 길이·해상도·압축률에 따른 token 수·메모리·sampling 비용을 비교. 카메라 이동과 객체 움직임을 구분해 다음 제어 회차로 연결<br>**학습 범위:** 시간 축·정보 결합을 중심으로 기본 video diffusion과 AnimateDiff를 설명하고 SVD·CogVideoX·Wan은 구조 변화 비교·Related Work로 확장. 모든 모델의 학습 recipe·전체 구현은 확장 학습으로 연결 |
+
+<!-- study-references:28 -->
+
+- [Video Diffusion Models](https://arxiv.org/abs/2204.03458)
+- [AnimateDiff: Animate Your Personalized Text-to-Image Diffusion Models without Specific Tuning](https://arxiv.org/abs/2307.04725)
+- [Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets](https://arxiv.org/abs/2311.15127)
+- [CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer](https://arxiv.org/abs/2408.06072)
+- [Wan: Open and Advanced Large-Scale Video Generative Models](https://arxiv.org/abs/2503.20314)
+
+<!-- /study-references -->
+
+##### 29회차 · 날짜 미정 · 발표자: 미정 · Controllable Generation: 이미지·비디오 조건 제어
+
+| 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
+|---|---|---|---|
+| Controllable Image / Video Generation | 모델 · 조건 제어 | 중요 | **포함 개념:** ControlNet · Spatial conditions / Edge / Depth / Pose · Frozen backbone / Trainable branch · Zero convolution / Residual injection · IP-Adapter / Reference image / Decoupled cross-attention · SparseCtrl / Sparse condition frames · CameraCtrl / Camera pose / Ray encoding · Camera motion / Object motion<br>**제어 문제 구분:** 공간 구조·참조 이미지의 외관·일부 frame·카메라 경로가 무엇을 지정하는지 입력·출력으로 비교. Text 조건·sampling guidance·추가 조건 모듈의 역할을 나누고 CFG와 함께 쓸 수 있음을 확인<br>**ControlNet 중심 학습:** Edge/depth/pose → trainable branch → 여러 해상도 residual → 고정 backbone의 경로·shape를 추적. Zero-initialized convolution의 초기 출력·gradient 흐름·고정/학습 파라미터를 확인<br>**IP-Adapter 주요 비교:** 참조 이미지 feature를 별도 cross-attention 경로로 주입하는 방식과 ControlNet의 공간 조건 residual을 비교. T2I-Adapter는 조건 feature를 넣는 경량 adapter의 관련 사례로 연결<br>**비디오 제어로 확장:** SparseCtrl의 드문 condition frame·조건이 있는 위치 표시·시간축 정보 전달, CameraCtrl의 camera pose에서 만든 ray 조건과 video backbone 결합을 핵심 흐름으로 비교. 조건 frame 사이의 생성과 카메라/객체 motion을 구분<br>**관련 확장과 평가:** VideoComposer·MotionCtrl은 복합 조건·camera/object motion 제어, Prompt-to-Prompt·SDEdit은 편집의 관련 사례로 연결. 조건 일치도·시각 품질·시간 일관성을 분리하고 조건·seed·backbone을 맞춰 비교<br>**학습 범위:** ControlNet의 구조·학습·추론을 자세히, IP-Adapter를 주요 비교로 다루고 SparseCtrl·CameraCtrl은 28회차 위에서 새 조건의 입력·결합 위치를 비교. 역문제 복원·3D 최적화는 별도 응용으로 구분하며 이 회차의 공통 코어에 넣지 않음 |
+
+<!-- study-references:29 -->
+
+- [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543)
+- [T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.08453)
+- [IP-Adapter: Text Compatible Image Prompt Adapter for Text-to-Image Diffusion Models](https://arxiv.org/abs/2308.06721)
+- [VideoComposer: Compositional Video Synthesis with Motion Controllability](https://arxiv.org/abs/2306.02018)
+- [SparseCtrl: Adding Sparse Controls to Text-to-Video Diffusion Models](https://arxiv.org/abs/2311.16933)
+- [MotionCtrl: A Unified and Flexible Motion Controller for Video Generation](https://arxiv.org/abs/2312.03641)
+- [CameraCtrl: Enabling Camera Control for Text-to-Video Generation](https://arxiv.org/abs/2404.02101)
+- [Prompt-to-Prompt Image Editing with Cross Attention Control](https://arxiv.org/abs/2208.01626)
+- [SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations](https://arxiv.org/abs/2108.01073)
 
 <!-- /study-references -->
