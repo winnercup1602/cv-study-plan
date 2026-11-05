@@ -47,12 +47,11 @@ def build(source_path=None, output_path=None):
                     reference_lines.append(lines[i])
                     i += 1
                 if i == len(lines):
-                    raise ValueError(f'{session_number}회차: 대표 연구 안내의 끝 표시가 필요합니다.')
+                    raise ValueError(f'{session_number}회차: Related Work의 끝 표시가 필요합니다.')
                 i += 1
                 reference_body = '\n'.join(reference_lines)
-                reference_count = len(re.findall(r'\]\(https?://', reference_body))
                 reference_html = render(reference_body)
-                out.append(f'<details class="study-references" id="session-{session_number}-references"><summary aria-label="{session_number}회차 대표 연구·준비 가이드, {reference_count}개 자료"><span>대표 연구·준비 가이드</span><span class="study-reference-count">{reference_count}개 자료</span><span class="study-reference-chevron" aria-hidden="true"></span></summary><div class="study-reference-body">{reference_html}</div></details>')
+                out.append(f'<details class="study-references" id="session-{session_number}-references"><summary aria-label="{session_number}회차 Related Work"><span>Related Work</span><span class="study-reference-chevron" aria-hidden="true"></span></summary><div class="study-reference-body">{reference_html}</div></details>')
                 continue
             if line == '<!-- presenter-guidance -->':
                 i += 1

@@ -10,8 +10,6 @@
 
 기준 논문이 있는 주제는 해당 논문을 출발점으로 삼습니다. 그 외에는 여러 논문·교재·강의·공식 문서·코드를 참고해 설명을 구성합니다. 각 단계를 펼쳐 세부 준비 안내를 확인할 수 있습니다.
 
-5회차부터는 각 회차의 **대표 연구·준비 가이드**를 함께 확인합니다. **기준** 연구는 구조·수식·학습·추론을 준비할 출발점이며, **비교** 연구는 옆에 적힌 차이와 연결 지점을 설명할 수 있도록 읽습니다. **보충** 자료는 이해와 실습을 돕습니다. 자료마다 읽을 포인트를 명시했으며, 연도는 초고 공개 또는 공식 출시 기준입니다.
-
 #### 시작 점검 · **5분** (0–5분)
 
 | 소요 시간 | 진행 구간 | 단계 | 중심 질문 | 세부 안내 |
@@ -150,7 +148,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:5 -->
 
-- **기준** · [Attention Is All You Need (2017)](https://arxiv.org/abs/1706.03762) — §3.2와 Figure 2에서 Q·K·V, scaled dot-product, multi-head와 mask를 확인. 작은 토큰 예제로 값·shape·softmax 축을 추적하고 self/cross-attention의 정보 출처를 비교. 전체 encoder–decoder 구조는 6회차에서 연결.
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
 <!-- /study-references -->
 
@@ -162,10 +160,10 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:6 -->
 
-- **기준** · [Attention Is All You Need (2017)](https://arxiv.org/abs/1706.03762) — Figure 1과 §3에서 encoder·decoder, positional encoding, FFN·residual·normalization을 연결. 학습 시 decoder 입력·target·mask와 생성 시 정보 범위를 표시.
-- **비교** · [Language Models are Unsupervised Multitask Learners (2019)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — GPT-2의 decoder-only 구조와 next-token prediction을 encoder–decoder와 비교. 입력을 한 칸 이동한 target, 병렬 학습·순차 생성에 집중.
-- **비교** · [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018)](https://arxiv.org/abs/1810.04805) — 입력 embedding·양방향 attention·MLM의 가린 위치와 loss를 GPT와 비교. NSP와 세대별 성능 재현은 공통 비교 범위를 넓히지 않음.
-- **비교** · [On Layer Normalization in the Transformer Architecture (2020)](https://arxiv.org/abs/2002.04745) — Pre-LN/Post-LN의 normalization 위치·residual 경로와 초기 gradient 차이를 도식으로 비교. warmup에 관한 결론은 논문의 가정·실험 조건과 함께 해석.
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+- [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)
+- [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
+- [On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745)
 
 <!-- /study-references -->
 
@@ -178,9 +176,9 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:7 -->
 
-- **기준** · [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (2020)](https://arxiv.org/abs/2010.11929) — patch embedding·CLS·학습형 절대 위치 embedding·encoder·readout의 전체 흐름과 해상도 변경 시 위치 embedding 보간을 확인.
-- **기준** · [Swin Transformer: Hierarchical Vision Transformer using Shifted Windows (2021)](https://arxiv.org/abs/2103.14030) — window/shifted-window attention·patch merging과 relative position bias를 확인. 일정 해상도의 ViT token과 계층적 feature를 비교.
-- **비교** · [RoFormer: Enhanced Transformer with Rotary Position Embedding (2021)](https://arxiv.org/abs/2104.09864) — Q·K의 위치별 회전과 내적에 상대 위치가 나타나는 원리를 확인. ViT의 입력 embedding, Swin의 attention score bias와 위치 정보 주입 지점을 비교.
+- [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929)
+- [Swin Transformer: Hierarchical Vision Transformer using Shifted Windows](https://arxiv.org/abs/2103.14030)
+- [RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864)
 
 <!-- /study-references -->
 
@@ -192,9 +190,9 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:8 -->
 
-- **기준** · [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness (2022)](https://arxiv.org/abs/2205.14135) — HBM–SRAM 간 이동, tiling과 online softmax로 큰 attention 중간 행렬 저장을 줄이는 알고리즘을 확인. 정확한 attention 계산과 이차 연산량이 유지되는 점을 설명.
-- **비교** · [Efficiently Scaling Transformer Inference (2022)](https://arxiv.org/abs/2211.05102) — autoregressive inference의 prefill/decode, KV cache 저장량과 메모리 대역폭·계산 비용을 확인. 병렬화 시스템 전체보다 cache에 무엇이 추가되고 재사용되는지 추적.
-- **비교** · [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning (2023)](https://arxiv.org/abs/2307.08691) — 원 FlashAttention의 계산 원리를 유지하면서 work partitioning·병렬성을 바꾸는 흐름을 확인. CUDA kernel 재현보다 수학적 연산·IO·실행 배치의 차이를 구분.
+- [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
+- [Efficiently Scaling Transformer Inference](https://arxiv.org/abs/2211.05102)
+- [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
 
 <!-- /study-references -->
 
@@ -208,8 +206,8 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:9 -->
 
-- **기준** · [End-to-End Object Detection with Transformers (2020)](https://arxiv.org/abs/2005.12872) — 구조도, object query·고정 크기 예측 집합, Hungarian matching 비용과 matching 이후 loss를 확인. unmatched query·no-object와 NMS 없는 추론을 작은 예로 설명.
-- **비교** · [YOLOv10: Real-Time End-to-End Object Detection (2024)](https://arxiv.org/abs/2405.14458) — consistent dual assignments, one-to-many/one-to-one head의 학습·추론 경로와 top-one 할당을 확인. DETR와 matching·학습 신호·후처리를 비교하며 효율화 블록 전체 재현은 범위를 넓히지 않음.
+- [End-to-End Object Detection with Transformers](https://arxiv.org/abs/2005.12872)
+- [YOLOv10: Real-Time End-to-End Object Detection](https://arxiv.org/abs/2405.14458)
 
 <!-- /study-references -->
 
@@ -221,12 +219,12 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:10 -->
 
-- **기준** · [Vision Transformers for Dense Prediction (2021)](https://arxiv.org/abs/2103.13413) — 중간 token의 readout·reassemble·해상도 변환과 점진적 fusion을 따라 그림과 tensor shape를 연결. 깊이·semantic segmentation에 따른 출력 채널·target·loss 차이를 확인.
-- **비교** · [DINOv2: Learning Robust Visual Features without Supervision (2023)](https://arxiv.org/abs/2304.07193) — 깊이 평가에서 frozen backbone 위에 DPT decoder를 학습하는 설정을 확인. 좋은 표현과 학습하는 decoder의 역할, linear head와의 평가 차이를 구분.
-- **비교** · [Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data (2024)](https://arxiv.org/abs/2401.10891) — DINOv2 encoder와 DPT decoder의 연결, labeled/unlabeled 데이터 활용을 확인. DPT head를 재사용하면서 학습 데이터·목표를 바꾸는 사례로 읽기.
-- **비교** · [Depth Anything V2 (2024)](https://arxiv.org/abs/2406.09414) — DPT depth decoder의 재사용과 synthetic teacher·실제 이미지 pseudo-label 학습을 확인. V1 대비 개선을 decoder 변경의 효과로 단정하지 않기.
-- **비교** · [DUSt3R: Geometric 3D Vision Made Easy (2023)](https://arxiv.org/abs/2312.14132) — DPT head가 깊이 대신 픽셀별 3D pointmap·confidence를 출력하는 연결을 확인. 해당 head의 입력·출력에 집중하고 전체 3D 정렬 알고리즘은 확장 읽기로 연결.
-- **비교** · [VGGT: Visual Geometry Grounded Transformer (2025)](https://arxiv.org/abs/2503.11651) — §3.3 Dense Predictions에서 DPT layer가 depth·pointmap·tracking feature를 만드는 경로를 확인. 여러 영상의 정보 교환을 담당하는 backbone과 프레임별 dense head의 역할을 구분.
+- [Vision Transformers for Dense Prediction](https://arxiv.org/abs/2103.13413)
+- [DINOv2: Learning Robust Visual Features without Supervision](https://arxiv.org/abs/2304.07193)
+- [Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data](https://arxiv.org/abs/2401.10891)
+- [Depth Anything V2](https://arxiv.org/abs/2406.09414)
+- [DUSt3R: Geometric 3D Vision Made Easy](https://arxiv.org/abs/2312.14132)
+- [VGGT: Visual Geometry Grounded Transformer](https://arxiv.org/abs/2503.11651)
 
 <!-- /study-references -->
 
@@ -238,12 +236,12 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:11 -->
 
-- **기준** · [Segment Anything (2023)](https://arxiv.org/abs/2304.02643) — image/prompt encoder·two-way mask decoder의 입력·출력·attention을 추적. prompt sampling·mask loss, 복수 mask·품질 예측·image embedding 재사용과 data engine을 연결.
-- **비교** · [SAM 2: Segment Anything in Images and Videos (2024)](https://arxiv.org/abs/2408.00714) — 현재 프레임의 이미지 특징 → 과거 memory 참조 → mask 예측 → memory 갱신을 추적. memory encoder·bank·attention, 프레임별 추가 prompt와 가림 이후 추적을 설명.
-- **비교** · [SAM 3: Segment Anything with Concepts (2025)](https://arxiv.org/abs/2511.16719) — 점으로 한 대상을 지정하는 입력과 텍스트·이미지 exemplar로 모든 일치 instance를 찾는 concept prompt를 비교. 공유 backbone·detector·memory tracker·presence head의 역할과 출력 mask·ID를 확인.
-- **비교** · [SAM 3.1 — Object Multiplex 공식 모델 카드 (2026)](https://huggingface.co/facebook/sam3.1/blob/main/README.md) — 공식 기술자료에서 Object Multiplex의 공유 memory와 여러 객체의 공동 처리를 확인. SAM 3 대비 객체별 반복 계산·정보 교환·메모리 비용이 달라지는 지점에 집중.
-- **비교** · [SAM 3D: 3Dfy Anything in Images (2025)](https://arxiv.org/abs/2511.16624) — 단일 이미지에서 객체의 geometry·texture·layout을 생성적으로 복원하는 입력·조건·출력을 확인. shape/pose와 texture 생성 단계의 역할, 가려진 영역에 필요한 학습 prior를 설명. 세부 생성 loss는 3장 학습 뒤 다시 연결.
-- **비교** · [SAM 3D Body: Robust Full-Body Human Mesh Recovery (2026)](https://arxiv.org/abs/2602.15989) — 이미지·선택적 keypoint/mask prompt → encoder–decoder → MHR 기반 인체 mesh·pose의 흐름을 확인. 일반 객체 생성과 인체 파라미터 추정의 출력 표현·학습 데이터 차이를 비교.
+- [Segment Anything](https://arxiv.org/abs/2304.02643)
+- [SAM 2: Segment Anything in Images and Videos](https://arxiv.org/abs/2408.00714)
+- [SAM 3: Segment Anything with Concepts](https://arxiv.org/abs/2511.16719)
+- [SAM 3.1](https://huggingface.co/facebook/sam3.1/blob/main/README.md)
+- [SAM 3D: 3Dfy Anything in Images](https://arxiv.org/abs/2511.16624)
+- [SAM 3D Body: Robust Full-Body Human Mesh Recovery](https://arxiv.org/abs/2602.15989)
 
 <!-- /study-references -->
 
@@ -255,8 +253,8 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:12 -->
 
-- **기준** · [Visual Instruction Tuning (2023)](https://arxiv.org/abs/2304.08485) — 원 LLaVA의 vision encoder → linear projector → LLM 연결과 두 단계 학습을 확인. 각 단계의 frozen/trainable 파라미터, 이미지·instruction·응답 입력과 next-token loss 위치를 표시.
-- **비교** · [Improved Baselines with Visual Instruction Tuning (2023)](https://arxiv.org/abs/2310.03744) — MLP projector·학습 데이터·해상도 등 원 LLaVA와 달라진 설정을 확인. 개선 결과를 projector 한 요소의 효과로 읽지 않도록 비교 조건을 맞추기.
+- [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485)
+- [Improved Baselines with Visual Instruction Tuning](https://arxiv.org/abs/2310.03744)
 
 <!-- /study-references -->
 
@@ -277,11 +275,11 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:13 -->
 
-- **기준** · [How transferable are features in deep neural networks? (2014)](https://arxiv.org/abs/1411.1792) — 어느 층까지 feature를 재사용하고 어느 층부터 새로 학습하는지 확인. task 유사성·전이 깊이·추가 학습이 성능 해석에 미치는 영향을 비교.
-- **비교** · [Do Better ImageNet Models Transfer Better? (2018)](https://arxiv.org/abs/1805.08974) — ImageNet 성능과 downstream 전이 성능을 비교한 평가 설정을 확인. frozen feature 평가와 fine-tuning 결과, 데이터·학습 조건의 영향을 구분.
-- **기준** · [LoRA: Low-Rank Adaptation of Large Language Models (2021)](https://arxiv.org/abs/2106.09685) — W를 고정하고 ΔW=BA를 학습하는 식과 행렬 차원·rank·scale·초기화를 확인. gradient가 흐르는 경로와 학습 파라미터 수·병합 후 추론을 설명.
-- **비교** · [In Search of Lost Domain Generalization (2020)](https://arxiv.org/abs/2007.01434) — domain generalization의 source/held-out target 구분과 model selection 규칙을 확인. target validation 접근 여부와 공정한 알고리즘 비교의 중요성을 설명.
-- **비교** · [WILDS: A Benchmark of in-the-Wild Distribution Shifts (2020)](https://arxiv.org/abs/2012.07421) — 현실의 데이터 출처·시간·환경 변화에 따른 분포 이동과 train/validation/test 구성을 확인. 분포 변화와 label·target 데이터 접근 조건을 구체적인 benchmark 사례로 설명.
+- [How transferable are features in deep neural networks?](https://arxiv.org/abs/1411.1792)
+- [Do Better ImageNet Models Transfer Better?](https://arxiv.org/abs/1805.08974)
+- [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
+- [In Search of Lost Domain Generalization](https://arxiv.org/abs/2007.01434)
+- [WILDS: A Benchmark of in-the-Wild Distribution Shifts](https://arxiv.org/abs/2012.07421)
 
 <!-- /study-references -->
 
@@ -294,9 +292,9 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:14 -->
 
-- **기준** · [A Simple Framework for Contrastive Learning of Visual Representations (2020)](https://arxiv.org/abs/2002.05709) — 두 증강·encoder·projection head·NT-Xent의 흐름, positive/negative·temperature와 linear evaluation을 확인. augmentation·batch·projection head ablation을 근거로 설명.
-- **기준** · [Learning Transferable Visual Models From Natural Language Supervision (2021)](https://arxiv.org/abs/2103.00020) — 이미지·텍스트 encoder → 정규화 embedding → batch 유사도 행렬 → 양방향 contrastive loss를 추적. 학습 쌍과 class prompt 기반 zero-shot 분류를 연결.
-- **비교** · [Sigmoid Loss for Language Image Pre-Training (2023)](https://arxiv.org/abs/2303.15343) — pairwise sigmoid loss의 positive/negative target, scale·bias와 CLIP의 batch softmax 정규화를 비교. 같은 입력 쌍이 어떤 학습 신호를 만드는지 설명.
+- [A Simple Framework for Contrastive Learning of Visual Representations](https://arxiv.org/abs/2002.05709)
+- [Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
+- [Sigmoid Loss for Language Image Pre-Training](https://arxiv.org/abs/2303.15343)
 
 <!-- /study-references -->
 
@@ -308,7 +306,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:15 -->
 
-- **기준** · [Masked Autoencoders Are Scalable Vision Learners (2021)](https://arxiv.org/abs/2111.06377) — 높은 masking 비율·visible-token encoder·가벼운 decoder의 구조, 원래 위치 복원·mask token·masked-region pixel loss를 확인. decoder를 떼어 encoder를 전이하는 평가와 ablation을 연결.
+- [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377)
 
 <!-- /study-references -->
 
@@ -320,7 +318,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:16 -->
 
-- **기준** · [Distilling the Knowledge in a Neural Network (2015)](https://arxiv.org/abs/1503.02531) — teacher/student의 soft target과 temperature, hard/soft loss의 결합과 gradient scale을 확인. teacher 고정·student 갱신을 표시하고 class 확률 분포가 전달하는 정보를 작은 예로 설명.
+- [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531)
 
 <!-- /study-references -->
 
@@ -332,9 +330,9 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:17 -->
 
-- **기준** · [Emerging Properties in Self-Supervised Vision Transformers (2021)](https://arxiv.org/abs/2104.14294) — 서로 다른 crop의 teacher/student 출력, EMA teacher·stop-gradient·centering·sharpening을 추적. class label 없이 target을 만드는 과정과 collapse 방지를 설명.
-- **비교** · [DINOv2: Learning Robust Visual Features without Supervision (2023)](https://arxiv.org/abs/2304.07193) — image-level·masked-patch 학습 목표의 target·loss 위치와 teacher 역할을 확인. MAE의 pixel 복원과 구분하고 global/dense feature 평가 조건을 비교.
-- **비교** · [DINOv3 (2025)](https://arxiv.org/abs/2508.10104) — 장시간 학습에서 dense feature가 저하되는 문제와 Gram anchoring의 기준 teacher·patch feature 관계·loss를 확인. image-level 성능과 dense feature 보존을 구분.
+- [Emerging Properties in Self-Supervised Vision Transformers](https://arxiv.org/abs/2104.14294)
+- [DINOv2: Learning Robust Visual Features without Supervision](https://arxiv.org/abs/2304.07193)
+- [DINOv3](https://arxiv.org/abs/2508.10104)
 
 <!-- /study-references -->
 
@@ -346,7 +344,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:18 -->
 
-- **기준** · [FixMatch: Simplifying Semi-Supervised Learning with Consistency and Confidence (2020)](https://arxiv.org/abs/2001.07685) — 약한 증강의 예측 → confidence 필터 → hard pseudo-label → 강한 증강의 loss를 추적. label 수·unlabeled 데이터 접근·threshold·오류 누적과 평가 조건을 연결.
+- [FixMatch: Simplifying Semi-Supervised Learning with Consistency and Confidence](https://arxiv.org/abs/2001.07685)
 
 <!-- /study-references -->
 
@@ -370,7 +368,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:19 -->
 
-- **기준** · [Auto-Encoding Variational Bayes (2013)](https://arxiv.org/abs/1312.6114) — 생성 모델·근사 posterior·ELBO의 reconstruction/KL 항과 Gaussian reparameterization을 확인. 관측 이미지·latent·noise와 encoder/decoder의 gradient 경로, prior sampling과 복원을 구분.
+- [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114)
 
 <!-- /study-references -->
 
@@ -382,8 +380,8 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:20 -->
 
-- **기준** · [Generative Adversarial Networks (2014)](https://arxiv.org/abs/1406.2661) — generator·discriminator의 minimax 목표, 실제로 쓰는 non-saturating generator loss, 교대 갱신과 고정 파라미터를 확인. 생성 품질·분포 다양성·mode collapse를 연결.
-- **보충** · [NIPS 2016 Tutorial: Generative Adversarial Networks (2016)](https://arxiv.org/abs/1701.00160) — 원 논문의 학습 흐름과 loss를 복습하고 mode collapse·학습 불안정의 원인과 평가상의 주의를 확인. 다른 GAN 변형 전체를 공통 학습 범위로 추가하지 않음.
+- [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
+- [NIPS 2016 Tutorial: Generative Adversarial Networks](https://arxiv.org/abs/1701.00160)
 
 <!-- /study-references -->
 
@@ -396,10 +394,10 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:21 -->
 
-- **기준** · [Pixel Recurrent Neural Networks (2016)](https://arxiv.org/abs/1601.06759) — 논문에 함께 제시된 PixelCNN의 masked convolution을 중심으로 픽셀·채널 순서와 autoregressive 확률 분해를 확인. teacher-forced 병렬 loss 계산과 순차 sampling을 비교.
-- **비교** · [Conditional Image Generation with PixelCNN Decoders (2016)](https://arxiv.org/abs/1606.05328) — PixelCNN decoder의 causal mask와 조건 입력을 확인. 기존에 생성한 픽셀과 외부 condition의 역할을 구분하고 순차 생성 비용을 설명.
-- **기준** · [Neural Discrete Representation Learning (2017)](https://arxiv.org/abs/1711.00937) — 가까운 codebook 벡터 선택·straight-through estimator와 reconstruction/codebook/commitment loss의 stop-gradient 위치를 확인. tokenizer와 code index prior의 두 단계 학습을 구분.
-- **비교** · [Taming Transformers for High-Resolution Image Synthesis (2020)](https://arxiv.org/abs/2012.09841) — perceptual/adversarial 목표로 학습한 tokenizer와 Transformer prior의 연결을 확인. VQ-VAE의 이산 latent와 비교하며 tokenizer 복원 성능과 prior 생성 성능을 구분.
+- [Pixel Recurrent Neural Networks](https://arxiv.org/abs/1601.06759)
+- [Conditional Image Generation with PixelCNN Decoders](https://arxiv.org/abs/1606.05328)
+- [Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937)
+- [Taming Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2012.09841)
 
 <!-- /study-references -->
 
@@ -413,7 +411,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:22 -->
 
-- **기준** · [Denoising Diffusion Probabilistic Models (2020)](https://arxiv.org/abs/2006.11239) — forward noising의 closed form, ε-prediction 학습과 reverse sampling 알고리즘을 확인. 이미지·noise·timestep으로 만드는 target과 U-Net의 입출력, 분산·추가 noise의 역할을 추적.
+- [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239)
 
 <!-- /study-references -->
 
@@ -425,8 +423,8 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:23 -->
 
-- **기준** · [Generative Modeling by Estimating Gradients of the Data Distribution (2019)](https://arxiv.org/abs/1907.05600) — score를 입력에 대한 log-density gradient로 해석하고 noise-conditioned denoising score matching의 target을 확인. 여러 noise 수준을 학습하는 이유와 sampling 신호를 연결.
-- **기준** · [Score-Based Generative Modeling through Stochastic Differential Equations (2020)](https://arxiv.org/abs/2011.13456) — forward/reverse-time SDE와 probability-flow ODE의 drift·noise·시간 방향을 비교. score–ε 관계와 SDE/ODE의 시간별 분포·개별 궤적 차이를 설명.
+- [Generative Modeling by Estimating Gradients of the Data Distribution](https://arxiv.org/abs/1907.05600)
+- [Score-Based Generative Modeling through Stochastic Differential Equations](https://arxiv.org/abs/2011.13456)
 
 <!-- /study-references -->
 
@@ -438,8 +436,8 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:24 -->
 
-- **기준** · [Denoising Diffusion Implicit Models (2020)](https://arxiv.org/abs/2010.02502) — 학습한 denoiser를 재사용하는 DDIM 갱신식, η와 timestep subsampling을 확인. 동일 초기 noise에서 결정적·확률적 sampling 경로를 작은 예로 계산.
-- **비교** · [Elucidating the Design Space of Diffusion-Based Generative Models (2022)](https://arxiv.org/abs/2206.00364) — sampling의 수치 적분 관점과 Euler·Heun, 시간 격자·step 크기·NFE를 확인. sampler·모델·noise parameterization을 구분하고 같은 호출 예산에서 결과를 비교.
+- [Denoising Diffusion Implicit Models](https://arxiv.org/abs/2010.02502)
+- [Elucidating the Design Space of Diffusion-Based Generative Models](https://arxiv.org/abs/2206.00364)
 
 <!-- /study-references -->
 
@@ -452,10 +450,10 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:25 -->
 
-- **기준** · [Classifier-Free Diffusion Guidance (2022)](https://arxiv.org/abs/2207.12598) — condition dropout으로 조건부/무조건부 예측을 함께 학습하는 방법과 두 예측의 guidance 조합을 확인. scale·조건 반영·다양성·추가 평가 비용을 연결.
-- **비교** · [FiLM: Visual Reasoning with a General Conditioning Layer (2017)](https://arxiv.org/abs/1709.07871) — condition에서 만든 feature-wise scale·shift가 시각 feature에 적용되는 위치·shape를 확인. cross-attention의 정보 선택·결합과 feature modulation의 차이를 설명.
-- **기준** · [High-Resolution Image Synthesis with Latent Diffusion Models (2021)](https://arxiv.org/abs/2112.10752) — autoencoder 압축·regularization과 고정 encoder/decoder, latent denoising·text cross-attention·CFG의 전체 경로를 확인. 압축률·복원 오차와 denoising 비용을 구분.
-- **비교** · [Scalable Diffusion Models with Transformers (2022)](https://arxiv.org/abs/2212.09748) — AdaLN-Zero에서 timestep/class 조건이 scale·shift·gate를 만드는 위치를 확인. 본 회차는 조건 주입 방식에 집중하고 DiT 전체 구조·출력은 28회차에서 연결.
+- [Classifier-Free Diffusion Guidance](https://arxiv.org/abs/2207.12598)
+- [FiLM: Visual Reasoning with a General Conditioning Layer](https://arxiv.org/abs/1709.07871)
+- [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752)
+- [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748)
 
 <!-- /study-references -->
 
@@ -467,7 +465,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:26 -->
 
-- **기준** · [Adding Conditional Control to Text-to-Image Diffusion Models (2023)](https://arxiv.org/abs/2302.05543) — 고정 backbone과 학습 branch·zero convolution을 구조도에서 표시. 조건 image·feature·다중 해상도 residual의 shape, 초기 출력과 학습 gradient·ablation을 확인.
+- [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543)
 
 <!-- /study-references -->
 
@@ -480,9 +478,9 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:27 -->
 
-- **기준** · [Flow Matching for Generative Modeling (2022)](https://arxiv.org/abs/2210.02747) — conditional probability path에서 시간별 sample·velocity target을 만드는 식과 회귀 loss를 확인. 학습한 marginal velocity field의 ODE sampling을 DDPM의 noise/score target과 비교.
-- **기준** · [Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow (2022)](https://arxiv.org/abs/2209.03003) — coupling·직선 보간·velocity regression, 적분으로 얻은 끝점 pair와 reflow의 관계를 확인. 학습 보간선과 실제 생성 궤적, 직선화·sampling 오차를 구분.
-- **보충** · [Flow Matching Guide and Code (2024)](https://arxiv.org/abs/2412.06264) — conditional path·velocity·loss·ODE solver를 작은 예제와 코드로 복습. 본 회차의 연속 데이터 경로에 해당하는 부분부터 읽기.
+- [Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747)
+- [Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003)
+- [Flow Matching Guide and Code](https://arxiv.org/abs/2412.06264)
 
 <!-- /study-references -->
 
@@ -494,7 +492,7 @@ Attention·위치 표현·Transformer의 계산 흐름과 비전·멀티모달 �
 
 <!-- study-references:28 -->
 
-- **기준** · [Scalable Diffusion Models with Transformers (2022)](https://arxiv.org/abs/2212.09748) — latent patch embedding·Transformer block·AdaLN-Zero·output head의 전체 shape를 추적. 원 DiT의 class/time 조건, ε·분산 예측과 patch 크기·규모 관련 ablation을 확인.
-- **기준** · [Scaling Rectified Flow Transformers for High-Resolution Image Synthesis (2024)](https://arxiv.org/abs/2403.03206) — 이미지·텍스트별 stream과 가중치, joint attention 후 각 stream으로 나뉘는 흐름을 확인. MMDiT 구조와 rectified-flow target·sampling을 구분해 전체 생성 과정을 설명.
+- [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748)
+- [Scaling Rectified Flow Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2403.03206)
 
 <!-- /study-references -->
