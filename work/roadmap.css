@@ -111,7 +111,8 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 /* One session framework for preparation and delivery; guidance starts folded. */
 .study-day{margin:22px 0 0;padding:14px 16px;border-left:3px solid var(--blue);border-radius:0 7px 7px 0;background:#f5f7fc;break-after:avoid}
 .study-day-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;font-size:11px;font-weight:650;color:var(--blue)}
-.study-day-meta>span{padding:2px 7px;background:white;border:1px solid #dce3ff;border-radius:4px}
+.study-day-meta>span:first-child{padding:2px 7px;background:white;border:1px solid #dce3ff;border-radius:4px}
+.study-presenter,.study-date-pending{color:var(--muted)}
 .study-day time{font-variant-numeric:tabular-nums}
 .study-day h5{margin:7px 0 0;font-size:14px;line-height:1.65;font-weight:700;color:var(--ink)}
 #chapter-0 .subheading{color:var(--ink)}

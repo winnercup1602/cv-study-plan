@@ -140,20 +140,22 @@ def build(source_path=None, output_path=None):
                 continue
             heading = re.match(r'^(#{2,6}) (.+)$', line)
             if heading:
-                study_day = re.fullmatch(r'(\d+)회차( 이어서)? · (\d{4})\.(\d{2})\.(\d{2}) \(([월화수목금토일])\) · (.+)', heading[2]) if model else None
+                study_day = re.fullmatch(r'(\d+)회차( 이어서)? · (\d{4})\.(\d{2})\.(\d{2}) \(([월화수목금토일])\) · (?:발표자: ([^·]+) · )?(.+)', heading[2]) if model else None
                 if study_day:
-                    number, continued, year, month, day, weekday, name = study_day.groups()
+                    number, continued, year, month, day, weekday, presenter, name = study_day.groups()
                     scheduled_date = date(int(year), int(month), int(day))
                     if '월화수목금토일'[scheduled_date.weekday()] != weekday:
                         raise ValueError(f'{scheduled_date}: 일정의 요일이 일치하지 않습니다.')
                     day_label = f'{number}회차' + (' 이어서' if continued else '')
-                    out.append(f'<div class="study-day"><div class="study-day-meta"><span>{day_label}</span><time datetime="{scheduled_date.isoformat()}">{year}.{month}.{day} ({weekday})</time></div><h5>{inline(name)}</h5></div>')
+                    presenter_html = f'<span class="study-presenter">발표자: {inline(presenter.strip())}</span>' if presenter else ''
+                    out.append(f'<div class="study-day"><div class="study-day-meta"><span>{day_label}</span><time datetime="{scheduled_date.isoformat()}">{year}.{month}.{day} ({weekday})</time>{presenter_html}</div><h5>{inline(name)}</h5></div>')
                     i += 1
                     continue
-                undated_day = re.fullmatch(r'(\d+)회차 · (.+)', heading[2]) if model else None
+                undated_day = re.fullmatch(r'(\d+)회차 · (?:날짜 미정 · )?(?:발표자: ([^·]+) · )?(.+)', heading[2]) if model else None
                 if undated_day:
-                    number, name = undated_day.groups()
-                    out.append(f'<div class="study-day"><div class="study-day-meta"><span>{number}회차</span></div><h5>{inline(name)}</h5></div>')
+                    number, presenter, name = undated_day.groups()
+                    presenter_html = f'<span class="study-presenter">발표자: {inline(presenter.strip())}</span>' if presenter else ''
+                    out.append(f'<div class="study-day"><div class="study-day-meta"><span>{number}회차</span><span class="study-date-pending">날짜 미정</span>{presenter_html}</div><h5>{inline(name)}</h5></div>')
                     i += 1
                     continue
                 subsection = re.fullmatch(r'(\d+)-([A-Z])\. (.+)', heading[2]) if model else None
