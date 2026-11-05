@@ -291,7 +291,7 @@ def build(source_path=None, output_path=None):
         body = re.sub(r'^#### (학습 목표|도달 기준)\s*\n.*?(?=^#### |\Z)', '', body, flags=re.M | re.S)
         body = re.sub(r'^#### 학습 내용\s*\n', '', body, flags=re.M)
         content = render(body, model=True)
-        section = f'<section class="chapter" id="chapter-{number}" aria-labelledby="heading-{number}"><header class="chapter-heading"><span class="chapter-number">{number:02d}</span><div><h3 id="heading-{number}">{inline(name)}</h3></div></header><div class="chapter-body">{goal_html}<div class="content-label">학습 내용 <span>위에서 아래로 권장 학습 순서</span></div>{content}</div></section>'
+        section = f'<section class="chapter" id="chapter-{number}" aria-labelledby="heading-{number}"><header class="chapter-heading"><span class="chapter-number">{number:02d}</span><div><h3 id="heading-{number}">{inline(name)}</h3></div></header><div class="chapter-body">{goal_html}<div class="content-label">학습 내용 <span>회차 순서대로 진행</span></div>{content}</div></section>'
         subsections = [{'id': f'chapter-{n}-{letter.lower()}', 'label': f'{n}-{letter}', 'name': label} for n, letter, label in re.findall(r'^#### (\d+)-([A-Z])\. (.+)$', body, re.M)]
         entry = {'number': number, 'name': name, 'html': section, 'subsections': subsections}
         chapters.append(entry)
@@ -355,10 +355,10 @@ if(location.protocol.startsWith('http')&&['127.0.0.1','localhost'].includes(loca
 '''
     page = f'''<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="roadmap-version" content="{version}"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233e5acd'/%3E%3C/svg%3E"><title>{inline(title)}</title><style>{css}</style></head><body>
-<aside class="sidebar" aria-label="로드맵 목차"><a class="brand" href="#top"><span class="brand-icon">KCVL</span><span class="brand-title">{inline(title)}</span></a><p class="sidebar-subtitle">운영계획 · 학습 항목</p><nav aria-label="장별 이동">{operations_nav}<div class="study-nav"><a class="nav-link page-part-link" href="#study-items"><span>02</span>학습 항목</a>{nav}</div></nav><div class="nav-small">{ref_nav}</div><div class="sidebar-note">장 안의 항목은 위에서 아래로.<br>필수부터 시작하고 중요로 확장하세요.</div></aside>
+<aside class="sidebar" aria-label="로드맵 목차"><a class="brand" href="#top"><span class="brand-icon">KCVL</span><span class="brand-title">{inline(title)}</span></a><p class="sidebar-subtitle">운영계획 · 학습 항목</p><nav aria-label="장별 이동">{operations_nav}<div class="study-nav"><a class="nav-link page-part-link" href="#study-items"><span>02</span>학습 항목</a>{nav}</div></nav><div class="nav-small">{ref_nav}</div><div class="sidebar-note">회차 순서대로 진행합니다.<br>회차별 중심 내용과 비교 범위를 확인하세요.</div></aside>
 <main class="main" id="top"><header class="hero"><div class="hero-top"><div class="eyebrow">KCVL · NEW STUDENT STUDY PLAN</div><button class="print" id="print" type="button">인쇄 / PDF</button></div><h1>{inline(title)}</h1><p class="hero-description">운영계획과 실제 학습할 항목을 두 파트로 정리했습니다.</p></header>
 {operations_html}<section class="study-items" id="study-items" aria-labelledby="study-items-heading"><header class="study-items-heading"><span class="page-part-number">02</span><div><h2 id="study-items-heading">학습 항목</h2><p>신경망 기초부터 생성 모델까지 · {chapter_range}</p></div></header><div class="study-items-body"><p class="study-items-intro">각 모델의 구조·수식·학습·구현을 함께 살펴보며, 원리가 밀접하게 연결된 후속 모델은 주요 변화를 비교합니다.</p>{study_intro_references}{part_html}{references}</div></section>
-<footer class="footer"><span>권장 학습 순서이며, 모든 항목이 다음 모델의 필수 선수조건은 아닙니다.</span><a href="{html.escape(source_path.name)}">Markdown 원문 ↗</a></footer>
+<footer class="footer"><span>회차 순서대로 진행하되, 모든 항목이 다음 모델의 필수 선수조건인 것은 아닙니다.</span><a href="{html.escape(source_path.name)}">Markdown 원문 ↗</a></footer>
 <script>{script}</script></main></body></html>'''
     if not chapters:
         raise ValueError('숫자로 시작하는 장 제목이 없습니다.')
