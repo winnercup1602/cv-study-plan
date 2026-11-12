@@ -119,6 +119,23 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 @media(max-width:760px){.study-day{padding:12px 13px}.study-day h5{font-size:13px}.study-day-meta{font-size:10px}#chapter-0 .table-wrap table{min-width:530px}}
 @media print{.study-day{background:#f7f7f7;border-color:#777}.study-day-meta{color:#333}.study-day h5{font-size:10pt}}
 
+.session-notes{margin-top:9px;font-size:12px;color:var(--muted)}
+.session-notes:empty,.session-note-status:empty{display:none}
+.session-note-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 6px;padding:0;list-style:none}
+.session-note-links li{min-width:0;overflow-wrap:anywhere}
+.session-note-links a,.session-note-details summary{color:var(--blue);font-weight:650}
+.session-note-links a{text-underline-offset:3px}
+.session-note-details summary{width:fit-content;cursor:pointer;padding:4px 0}
+.session-note-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px;max-width:600px;margin:6px 0}
+.session-note-form label{display:grid;gap:3px;font-weight:650}
+.session-note-form input{width:100%;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);font-size:14px}
+.session-note-form p,.session-note-status{margin:4px 0}
+.session-note-form p{grid-column:1/-1}
+.session-note-form button{justify-self:start;padding:6px 12px;border:0;border-radius:6px;background:var(--blue);color:white;font-weight:650;cursor:pointer}
+.session-note-form button:disabled{opacity:.6;cursor:wait}
+@media(max-width:760px){.session-note-form{grid-template-columns:1fr}.session-note-form input{font-size:16px}}
+@media print{.session-note-details,.session-note-status,#session-notes-load-error{display:none!important}}
+
 .study-references{margin:9px 0 26px;border:1px solid var(--line);border-radius:8px;background:#fafbfe}
 .study-references>summary{display:flex;align-items:center;gap:10px;padding:13px 15px;list-style:none;cursor:pointer;font-size:12px;font-weight:700;color:var(--blue)}
 .study-references>summary::-webkit-details-marker{display:none}
