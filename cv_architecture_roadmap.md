@@ -105,14 +105,14 @@ Dataset에서 batch를 만들고 작은 신경망의 입력·예측·loss·gradi
 | Tensor / Linear / MLP | 기초 개념 | 필수 | **포함 개념:** Tensor shape · Batch / Channel / Spatial / Token axes · Reshape / Transpose · Matrix multiplication · Broadcasting · Linear layer · Parameter count · MLP<br>**텐서와 연산:** 작은 입력에서 축의 의미, reshape·transpose 전후 shape, 행렬 곱·broadcasting의 조건 확인<br>**Linear와 MLP:** 가중치·bias·파라미터 수, batch 내 가중치 공유, 입력 → 은닉 표현 → logits의 수식·코드 연결 |
 | Activation / Initialization | 기초 개념 | 필수 | **포함 개념:** Nonlinearity · ReLU · GELU / SiLU · Sigmoid / Tanh · Saturation · Xavier / He initialization · Vanishing / Exploding gradients<br>**핵심 설명:** activation이 없을 때 Linear의 연속 적용이 하나의 affine 변환으로 합쳐지는 이유, ReLU의 출력·gradient와 sigmoid의 saturation 비교<br>**초기화 확인:** Xavier·He의 목적과 대표 적용 조건, 초기화 크기에 따른 층별 출력·gradient 그래프 비교<br>**비교 범위:** GELU·SiLU·tanh는 모양·특성 비교표로 확인. 함수별 상세 유도와 초기화 분산식의 증명은 제외 |
 
-##### 2회차 · 2026.11.12 (목) · 발표자: 강근영 · DataLoader에서 파라미터 갱신까지
+##### 2회차 · 2026.11.19 (목) · 발표자: 강근영 · DataLoader에서 파라미터 갱신까지
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
 | DataLoader / Loss / Backpropagation | 기초 개념 · 학습 원리 | 필수 | **포함 개념:** Dataset / DataLoader · __len__ / __getitem__ · Input–Target pairs / Transforms · Batch size / Shuffle · collate_fn / Batch shape · Iteration / Epoch · Device transfer · Logits / Probability / Target · Output–Target shape / Dtype · Cross-entropy / MSE · Computational graph / Chain rule · Backpropagation / Autograd · requires_grad / detach · Gradient accumulation / Reset · zero_grad / backward / step<br>**데이터에서 batch까지:** Dataset이 한 입력·target을 반환하고 DataLoader가 샘플을 선택·결합해 batch를 만드는 흐름. 작은 이미지 예제에서 sample·batch의 shape, batch_size·shuffle, iteration·epoch를 확인. collate_fn은 샘플 결합·가변 길이 padding의 역할까지 비교<br>**예측과 오차:** batch를 device로 옮겨 모델에 입력하고 logits·확률·target을 연결. 분류 cross-entropy와 회귀 MSE의 용도, loss와 정확도의 차이를 확인. 기존의 작은 분류 예제에서 logits [B,C]·class-index target [B]의 shape와 자료형을 짚고(B: batch 크기, C: class 수), logits는 부동소수점·target은 torch.long임을 확인. CrossEntropyLoss에는 softmax 전 logits 입력<br>**역전파와 자동미분:** Backpropagation은 계산 그래프를 거꾸로 따라 chain rule로 gradient를 구하는 방법, Autograd는 연산을 기록하고 그 미분을 자동 계산하는 PyTorch 기능. 간단한 그래프의 gradient를 손으로 구한 뒤 backward 결과와 비교<br>**Gradient 경계:** 같은 작은 계산 그래프에서 requires_grad로 어떤 입력·파라미터의 gradient가 필요한지 지정하고, detach가 중간 표현의 이전 그래프 연결을 끊는 위치를 확인. 파라미터를 고정하는 것과 해당 연산을 통한 입력 쪽 gradient 전달을 끊는 것을 구분<br>**학습 루프:** batch → zero_grad → forward → loss → backward → step을 하나의 준비된 코드에서 추적. gradient 누적·초기화, 미분 계산과 optimizer의 파라미터 갱신을 구분<br>**학습 범위:** 작은 Dataset·DataLoader와 한 번의 학습 step을 직접 추적. Shape·자료형·gradient 경계는 이 회차 담당자가 준비한 기존 loss 예제·계산 그래프 안에서 확인. 데이터 로딩 성능 튜닝·분산 sampler·worker 내부 구현은 확장 학습으로 연결 |
 | Optimization / LR Scheduling | 학습 방법 | 필수 | **포함 개념:** Mini-batch GD · SGD · Momentum / Adam / AdamW · Learning rate · Warmup · Cosine decay · L2 penalty / Weight decay<br>**핵심 설명:** mini-batch gradient와 SGD의 한 번 갱신을 계산, 학습률이 갱신 크기와 안정성에 미치는 영향<br>**대표 비교:** 준비된 갱신식 표로 Momentum의 누적 방향·Adam의 적응적 스케일·AdamW의 decoupled weight decay 확인. Adam에서 L2 penalty와 decoupled decay의 차이 구분<br>**비교 범위:** warmup·cosine은 학습률 곡선과 적용 위치 확인. optimizer별 전체 수식 유도·상태 변수 계산과 여러 schedule의 상세 비교는 제외 |
 
-##### 3회차 · 2026.11.19 (목) · 발표자: 이소윤 · 학습 안정성·일반화·훈련 기법
+##### 3회차 · 2026.11.26 (목) · 발표자: 이소윤 · 학습 안정성·일반화·훈련 기법
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
@@ -122,7 +122,7 @@ Dataset에서 batch를 만들고 작은 신경망의 입력·예측·loss·gradi
 
 #### 0-B. Experiments & Analysis
 
-##### 4회차 · 2026.11.26 (목) · 발표자: 김재순 · 실험 설계와 모델·feature 분석
+##### 4회차 · 2026.12.03 (목) · 발표자: 김재순 · 실험 설계와 모델·feature 분석
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
@@ -139,7 +139,7 @@ Attention의 계산에서 Transformer 블록·학습·생성으로 연결하고,
 
 #### 1-A. Transformer Foundations
 
-##### 5회차 · 2026.12.03 (목) · 발표자: 곽명조 · Attention: 토큰 사이의 정보 결합
+##### 5회차 · 2026.12.10 (목) · 발표자: 곽명조 · Attention: 토큰 사이의 정보 결합
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
@@ -151,7 +151,7 @@ Attention의 계산에서 Transformer 블록·학습·생성으로 연결하고,
 
 <!-- /study-references -->
 
-##### 6회차 · 2026.12.10 (목) · 발표자: 박준규 · Transformer: 블록 구조와 학습·생성
+##### 6회차 · 2026.12.17 (목) · 발표자: 박준규 · Transformer: 블록 구조와 학습·생성
 
 | 학습 항목 | 유형 | 등급 | 깊게 봐야 할 포인트 |
 |---|---|---|---|
