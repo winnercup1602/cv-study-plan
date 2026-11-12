@@ -121,17 +121,21 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 
 .session-notes{margin-top:9px;font-size:12px;color:var(--muted)}
 .session-notes:empty,.session-note-status:empty{display:none}
-.session-note-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 6px;padding:0;list-style:none}
-.session-note-links li{min-width:0;overflow-wrap:anywhere}
+.session-note-links{display:grid;gap:6px;margin:0 0 6px;padding:0;list-style:none}
+.session-note-links li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;column-gap:12px}
+.session-note-links li:has(details[open]){grid-template-columns:minmax(0,1fr)}
+.session-note-links .session-note-status{grid-column:1/-1}
 .session-note-links a,.session-note-details summary{color:var(--blue);font-weight:650}
-.session-note-links a{text-underline-offset:3px}
+.session-note-links a{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-underline-offset:3px}
 .session-note-details summary{width:fit-content;cursor:pointer;padding:4px 0}
 .session-note-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px;max-width:600px;margin:6px 0}
 .session-note-form label{display:grid;gap:3px;font-weight:650}
 .session-note-form input{width:100%;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);font-size:14px}
 .session-note-form p,.session-note-status{margin:4px 0}
 .session-note-form p{grid-column:1/-1}
-.session-note-form button{justify-self:start;padding:6px 12px;border:0;border-radius:6px;background:var(--blue);color:white;font-weight:650;cursor:pointer}
+.session-note-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.session-note-form button{padding:6px 12px;border:0;border-radius:6px;background:var(--blue);color:white;font-weight:650;cursor:pointer}
+.session-note-form button[type=button]{background:#fff3f3;color:#a12a2a}
 .session-note-form button:disabled{opacity:.6;cursor:wait}
 @media(max-width:760px){.session-note-form{grid-template-columns:1fr}.session-note-form input{font-size:16px}}
 @media print{.session-note-details,.session-note-status,#session-notes-load-error{display:none!important}}

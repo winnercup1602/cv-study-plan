@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="roadmap-version" content="38beeffc172d7b9039bc0a2fb945928dc379235cbb6c3771e796051607fcaa88"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233e5acd'/%3E%3C/svg%3E"><title>CV 핵심 개념과 모델 스터디 계획</title><style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="roadmap-version" content="f92657183df4ac6d68eba2d814f9fb9cdbfc8f665dc20f1af51a12830a8c2cb4"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233e5acd'/%3E%3C/svg%3E"><title>CV 핵심 개념과 모델 스터디 계획</title><style>
 :root{--paper:#f7f8fa;--surface:#fff;--ink:#202a3a;--muted:#657187;--line:#e4e8ee;--blue:#3e5acd;--blue-soft:#edf1ff;--teal:#157a71;--teal-soft:#e8f5f0;--amber:#916819;--amber-soft:#faf3df;--sidebar:244px}
 .operations{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 28px;overflow:hidden}.operations-heading{padding:23px 28px;background:var(--blue-soft);border-bottom:1px solid #dce3ff}.operations-heading h2{font-size:23px;letter-spacing:-.5px;margin:0;color:var(--blue)}.operations-toc{display:flex;flex-wrap:wrap;gap:8px;padding:18px 28px;border-bottom:1px solid var(--line)}.operations-toc a{text-decoration:none;font-size:11px;color:var(--blue);border:1px solid #dce3ff;padding:6px 10px;border-radius:6px}.operations-toc a:hover{background:var(--blue-soft)}.operations-body{padding:5px 28px 24px}.operations-body p,.operations-body li{font-size:13px;line-height:1.95;color:var(--muted)}.operations-body strong{color:var(--ink)}.operations-body>p:first-child{font-size:14px;color:var(--ink)}.operations-body>p:nth-child(2){border-left:3px solid var(--blue);background:#f5f7fc;padding:14px 17px;border-radius:0 8px 8px 0}.operations-body .subheading{font-size:16px;margin:32px 0 13px;color:var(--ink);scroll-margin-top:25px}.operations-body ol,.operations-body ul{padding-left:22px}.operations-body li{margin:12px 0}.operations-body table{font-size:12px;min-width:0;line-height:1.9}.operations-body td:first-child{width:22%}.operations-body th{color:var(--ink)}.operations-body .checklist li{padding:8px 0;margin:0;border-bottom:1px solid #edf0f4}.operations-body .checklist input{margin-top:6px}@media(max-width:760px){.operations{border-radius:11px}.operations-heading{padding:18px}.operations-heading h2{font-size:20px}.operations-toc{padding:14px 18px;gap:6px}.operations-toc a{font-size:10px;padding:5px 8px}.operations-body{padding:3px 18px 18px}.operations-body p,.operations-body li{font-size:12px}.operations-body .subheading{font-size:14px}.operations-body>p:first-child{font-size:13px}}@media print{.operations{border-radius:0;border-color:#ccc;overflow:visible}.operations-heading{background:white;padding:15px 18px;break-after:avoid}.operations-heading h2{font-size:17pt;color:#222}.operations-toc{display:none}.operations-body{padding:0 18px 15px}.operations-body p,.operations-body li{font-size:9pt;color:#444}.operations-body .subheading{break-after:avoid}.operations-body table{min-width:0;font-size:8pt}.operations-body tr{break-inside:avoid}.operations-body .table-wrap{overflow:visible}}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:112px}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.65;word-break:keep-all}button,input{font:inherit}a{color:inherit}button,a,input,summary{touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #7893ff;outline-offset:4px}[hidden]{display:none!important}
@@ -122,17 +122,21 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 
 .session-notes{margin-top:9px;font-size:12px;color:var(--muted)}
 .session-notes:empty,.session-note-status:empty{display:none}
-.session-note-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 6px;padding:0;list-style:none}
-.session-note-links li{min-width:0;overflow-wrap:anywhere}
+.session-note-links{display:grid;gap:6px;margin:0 0 6px;padding:0;list-style:none}
+.session-note-links li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;column-gap:12px}
+.session-note-links li:has(details[open]){grid-template-columns:minmax(0,1fr)}
+.session-note-links .session-note-status{grid-column:1/-1}
 .session-note-links a,.session-note-details summary{color:var(--blue);font-weight:650}
-.session-note-links a{text-underline-offset:3px}
+.session-note-links a{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-underline-offset:3px}
 .session-note-details summary{width:fit-content;cursor:pointer;padding:4px 0}
 .session-note-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px;max-width:600px;margin:6px 0}
 .session-note-form label{display:grid;gap:3px;font-weight:650}
 .session-note-form input{width:100%;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);font-size:14px}
 .session-note-form p,.session-note-status{margin:4px 0}
 .session-note-form p{grid-column:1/-1}
-.session-note-form button{justify-self:start;padding:6px 12px;border:0;border-radius:6px;background:var(--blue);color:white;font-weight:650;cursor:pointer}
+.session-note-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.session-note-form button{padding:6px 12px;border:0;border-radius:6px;background:var(--blue);color:white;font-weight:650;cursor:pointer}
+.session-note-form button[type=button]{background:#fff3f3;color:#a12a2a}
 .session-note-form button:disabled{opacity:.6;cursor:wait}
 @media(max-width:760px){.session-note-form{grid-template-columns:1fr}.session-note-form input{font-size:16px}}
 @media print{.session-note-details,.session-note-status,#session-notes-load-error{display:none!important}}
@@ -511,15 +515,16 @@ html{scroll-padding-top:30px}.main{max-width:1420px}.hero h1{font-size:39px}.her
 </ul></div></details></div></section></div></section>
 <footer class="footer"><span>회차 순서대로 진행하되, 모든 항목이 다음 모델의 필수 선수조건인 것은 아닙니다.</span><a href="cv_architecture_roadmap.md">Markdown 원문 ↗</a></footer>
 <template id="session-notes-template">
-  <ul class="session-note-links" aria-label="세션 노트" hidden></ul>
   <details class="session-note-details">
     <summary>노트 링크 등록</summary>
     <form class="session-note-form" autocomplete="off">
-      <label>노트 제목<input name="title" required maxlength="120"></label>
       <label>노트 URL<input name="url" type="url" required maxlength="2048" placeholder="https://"></label>
       <label>참가자 등록 코드<input name="code" type="password" required maxlength="64" autocomplete="off"></label>
-      <p>등록한 제목과 URL은 이 사이트에 공개됩니다.</p>
-      <button type="submit">등록하기</button>
+      <p>등록한 URL은 이 사이트에 공개됩니다.</p>
+      <div class="session-note-actions">
+        <button type="submit">등록하기</button>
+        <button type="button" hidden>삭제하기</button>
+      </div>
     </form>
   </details>
   <p class="session-note-status" role="status"></p>
@@ -564,6 +569,7 @@ if(location.protocol.startsWith('http')&&['127.0.0.1','localhost'].includes(loca
   const endpoint = 'https://script.google.com/macros/s/AKfycbxjegCNCDm3UiXGaAbO6yGcVL9hl39YiN4V6vEvI9z6fQM5lNsUjtAtd3k4nTlzQY3F_w/exec';
   const template = document.querySelector('#session-notes-template');
   const cards = new Map();
+  const changedIds = new Set();
   let registrationCode = '';
 
   function webUrl(value) {
@@ -590,83 +596,158 @@ if(location.protocol.startsWith('http')&&['127.0.0.1','localhost'].includes(loca
     return response.json();
   }
 
-  function showNote(note) {
+  function showNote(note, activeCard) {
     const url = webUrl(note.url);
     if (!url || !cards.has(note.session)) return;
+    let activeControls;
     for (const card of cards.get(note.session)) {
-      if (card.ids.has(note.id)) continue;
       const item = document.createElement('li');
       const link = document.createElement('a');
-      link.textContent = note.title;
+      link.textContent = url;
       link.href = url;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      item.append(link);
-      card.list.append(item);
-      card.ids.add(note.id);
+      const controls = createControls(card, note);
+      item.append(link, controls.fragment);
+      const previous = card.items.get(note.id);
+      if (previous) previous.replaceWith(item);
+      else card.list.append(item);
+      card.items.set(note.id, item);
       card.list.hidden = false;
+      if (card === activeCard) activeControls = controls;
+    }
+    return activeControls;
+  }
+
+  function removeNote(session, id) {
+    for (const card of cards.get(session)) {
+      card.items.get(id)?.remove();
+      card.items.delete(id);
+      card.list.hidden = card.items.size === 0;
     }
   }
 
-  for (const container of document.querySelectorAll('[data-session-notes]')) {
-    const session = Number(container.dataset.sessionNotes);
-    container.append(template.content.cloneNode(true));
-    const list = container.querySelector('ul');
-    const details = container.querySelector('details');
-    const form = container.querySelector('form');
-    const submit = form.querySelector('button');
-    const status = container.querySelector('[role="status"]');
+  function createControls(card, note) {
+    const fragment = template.content.cloneNode(true);
+    const details = fragment.querySelector('details');
+    const summary = details.querySelector('summary');
+    const form = details.querySelector('form');
+    const submit = form.querySelector('[type="submit"]');
+    const remove = form.querySelector('[type="button"]');
+    const status = fragment.querySelector('[role="status"]');
+    const urlInput = form.elements.url;
     const codeInput = form.elements.code;
-    if (!cards.has(session)) cards.set(session, []);
-    cards.get(session).push({ list, ids: new Set() });
+    if (note) {
+      summary.textContent = '수정 / 삭제';
+      urlInput.value = note.url;
+      submit.textContent = '수정 저장';
+      remove.hidden = false;
+      form.querySelector('p').hidden = true;
+    }
 
     details.addEventListener('toggle', () => {
       if (details.open && !codeInput.value) codeInput.value = registrationCode;
     });
-    form.addEventListener('submit', async event => {
+    form.addEventListener('submit', event => {
       event.preventDefault();
+      save(note ? 'update' : 'add');
+    });
+    remove.addEventListener('click', () => save('delete'));
+
+    async function save(action) {
       if (submit.disabled) return;
-      const url = webUrl(form.elements.url.value.trim());
-      const title = form.elements.title.value.trim();
       const code = codeInput.value.trim();
-      if (!url || !title || !code || url.length > 2048) {
-        status.textContent = '제목, 올바른 웹 주소(http 또는 https), 등록 코드를 입력해 주세요.';
+      const url = action === 'delete' ? '' : webUrl(urlInput.value.trim());
+      if (!code) {
+        status.textContent = '참가자 등록 코드를 입력해 주세요.';
+        codeInput.focus();
+        return;
+      }
+      if (action !== 'delete' && (!url || url.length > 2048)) {
+        status.textContent = '올바른 웹 주소(http 또는 https)를 입력해 주세요.';
+        urlInput.focus();
         return;
       }
 
       submit.disabled = true;
-      status.textContent = '등록 중…';
+      remove.disabled = true;
+      status.textContent = '처리 중…';
       try {
-        const result = await request(new URLSearchParams({ session, title, url, code }));
+        const body = new URLSearchParams({ action, session: card.session, url, code });
+        if (note) {
+          body.set('id', note.id);
+          body.set('previousUrl', note.url);
+        }
+        const result = await request(body);
         if (result.error === 'code') {
           status.textContent = '등록 코드를 확인해 주세요.';
           codeInput.focus();
           return;
         }
-        if (result.error === 'invalid') {
-          status.textContent = '제목과 웹 주소를 확인해 주세요.';
+        const errors = {
+          invalid: '웹 주소를 확인해 주세요.',
+          duplicate: '같은 회차에 이미 등록된 링크입니다.',
+          missing: '이미 삭제된 링크입니다. 페이지를 새로고침해 주세요.',
+          conflict: '다른 참가자가 링크를 변경했습니다. 새로고침 후 다시 시도해 주세요.',
+        };
+        if (errors[result.error]) {
+          status.textContent = errors[result.error];
           return;
         }
-        if (!result.ok || !result.note) throw new Error('Note was not saved');
-        showNote(result.note);
+        if (!result.ok) throw new Error('Note was not saved');
         registrationCode = code;
+        if (action === 'delete') {
+          if (result.removed !== note.id) throw new Error('Note was not removed');
+          changedIds.add(note.id);
+          removeNote(card.session, note.id);
+          card.registration.status.textContent = '링크를 삭제했습니다.';
+          card.registration.summary.focus();
+          return;
+        }
+
+        if (!result.note) throw new Error('Note was not saved');
+        changedIds.add(result.note.id);
+        if (action === 'update') {
+          const updated = showNote(result.note, card);
+          updated.status.textContent = '링크를 수정했습니다.';
+          updated.summary.focus();
+          return;
+        }
+        if (!result.duplicate || !card.items.has(result.note.id)) showNote(result.note);
         form.reset();
         details.open = false;
-        container.querySelector('summary').focus();
-        status.textContent = result.duplicate ? '이미 등록된 링크입니다.' : '노트를 등록했습니다.';
+        summary.focus();
+        status.textContent = result.duplicate ? '이미 등록된 링크입니다.' : '링크를 등록했습니다.';
       } catch {
-        status.textContent = '노트를 등록할 수 없습니다. 잠시 후 다시 시도해 주세요.';
+        status.textContent = '링크를 처리할 수 없습니다. 잠시 후 다시 시도해 주세요.';
       } finally {
         submit.disabled = false;
+        remove.disabled = false;
       }
-    });
+    }
+    return { fragment, status, summary };
+  }
+
+  for (const container of document.querySelectorAll('[data-session-notes]')) {
+    const session = Number(container.dataset.sessionNotes);
+    const list = document.createElement('ul');
+    list.className = 'session-note-links';
+    list.setAttribute('aria-label', '세션 노트');
+    list.hidden = true;
+    const card = { session, list, items: new Map() };
+    card.registration = createControls(card);
+    container.append(list, card.registration.fragment);
+    if (!cards.has(session)) cards.set(session, []);
+    cards.get(session).push(card);
   }
 
   if (cards.size) {
     request()
       .then(result => {
         if (!result.ok || !Array.isArray(result.notes)) throw new Error('Notes unavailable');
-        result.notes.forEach(showNote);
+        for (const note of result.notes) {
+          if (!changedIds.has(note.id)) showNote(note);
+        }
       })
       .catch(() => {
         document.querySelector('#session-notes-load-error').hidden = false;

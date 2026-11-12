@@ -370,15 +370,16 @@ if(location.protocol.startsWith('http')&&['127.0.0.1','localhost'].includes(loca
 {operations_html}<section class="study-items" id="study-items" aria-labelledby="study-items-heading"><header class="study-items-heading"><span class="page-part-number">02</span><div><h2 id="study-items-heading">학습 항목</h2><p>신경망 기초부터 생성 모델까지 · {chapter_range}</p></div></header><div class="study-items-body"><p class="study-items-intro">각 모델의 구조·수식·학습·구현을 함께 살펴보며, 원리가 밀접하게 연결된 후속 모델은 주요 변화를 비교합니다.</p><p id="session-notes-load-error" role="status" hidden>세션 노트를 불러올 수 없습니다. 페이지를 새로고침해 주세요.</p>{study_intro_references}{part_html}{references}</div></section>
 <footer class="footer"><span>회차 순서대로 진행하되, 모든 항목이 다음 모델의 필수 선수조건인 것은 아닙니다.</span><a href="{html.escape(source_path.name)}">Markdown 원문 ↗</a></footer>
 <template id="session-notes-template">
-  <ul class="session-note-links" aria-label="세션 노트" hidden></ul>
   <details class="session-note-details">
     <summary>노트 링크 등록</summary>
     <form class="session-note-form" autocomplete="off">
-      <label>노트 제목<input name="title" required maxlength="120"></label>
       <label>노트 URL<input name="url" type="url" required maxlength="2048" placeholder="https://"></label>
       <label>참가자 등록 코드<input name="code" type="password" required maxlength="64" autocomplete="off"></label>
-      <p>등록한 제목과 URL은 이 사이트에 공개됩니다.</p>
-      <button type="submit">등록하기</button>
+      <p>등록한 URL은 이 사이트에 공개됩니다.</p>
+      <div class="session-note-actions">
+        <button type="submit">등록하기</button>
+        <button type="button" hidden>삭제하기</button>
+      </div>
     </form>
   </details>
   <p class="session-note-status" role="status"></p>
